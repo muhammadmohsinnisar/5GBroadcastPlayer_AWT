@@ -22,6 +22,8 @@ public class PlayerActivity extends AppCompatActivity{
     ExoPlayer player;
     PlayerView playerView;
     // creating a variable for exoplayer
+    // Need to add a binder to the view
+    //The context might be cause of failure
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
