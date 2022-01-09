@@ -17,7 +17,8 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
 public class PlayerActivity extends AppCompatActivity{
 
-    String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
+    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
+    String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,7 @@ public class PlayerActivity extends AppCompatActivity{
 
         ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.exo_player_view);
+
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url1);
         simpleExoPlayer.addMediaItem(mediaItem);
