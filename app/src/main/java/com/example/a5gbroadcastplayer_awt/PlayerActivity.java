@@ -17,34 +17,19 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
 public class PlayerActivity extends AppCompatActivity{
 
-
-    private static final Uri STREAM_URL = null;
-    ExoPlayer player;
-    PlayerView playerView;
-    // creating a variable for exoplayer
-    // Need to add a binder to the view
-    //The context might be cause of failure
+    String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-        playerView.findViewById(R.id.playerView);
-        playerView.setPlayer(player);
-        initializePlayer();
-    }
 
-    private void initializePlayer(){
-        DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(this);
-        MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
-        MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
 
-        // creating a variable for exoplayer with MediaSource
-        player = new ExoPlayer.Builder(this)
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build();
-
-        player.addMediaSource(mediaSource);
-        player.play();
+        ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
+        PlayerView playerView = findViewById(R.id.exo_player_view);
+        playerView.setPlayer(simpleExoPlayer);
+        MediaItem mediaItem = MediaItem.fromUri(url1);
+        simpleExoPlayer.addMediaItem(mediaItem);
+        simpleExoPlayer.prepare();
     }
 }

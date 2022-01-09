@@ -16,15 +16,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toPlayer = findViewById(R.id.bt_play);
 
-        toPlayer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+       toPlayer.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               openActivity2();
 
-                Intent player = new Intent(getApplicationContext(), PlayerActivity.class);
-                startActivity(player);
+           }
+       });
+    }
 
-            }
-        });
+    private void openActivity2() {
+        Intent intent = new Intent(this, PlayerActivity.class);
+        startActivity(intent);
     }
 
 }
