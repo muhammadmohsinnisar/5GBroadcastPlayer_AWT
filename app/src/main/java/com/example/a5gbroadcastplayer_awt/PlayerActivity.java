@@ -17,26 +17,22 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
 public class PlayerActivity extends AppCompatActivity{
 
-<<<<<<< HEAD
-
     private static final String STREAM_URL = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
     ExoPlayer player;
     PlayerView playerView;
     // creating a variable for exoplayer
     // Need to add a binder to the view
     //The context might be cause of failure
-=======
     //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
     String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
->>>>>>> aec82d55ff26e323c0068f42833dd6750d8f7874
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
-<<<<<<< HEAD
         playerView =  new PlayerView(getApplicationContext());
-        playerView.findViewById(R.id.playerView);
+        playerView.findViewById(R.id.exo_player_view);
         playerView.setPlayer(player);
         initializePlayer();
     }
@@ -50,12 +46,9 @@ public class PlayerActivity extends AppCompatActivity{
         player = new ExoPlayer.Builder(getApplicationContext())
                 .setMediaSourceFactory(mediaSourceFactory)
                 .build();
-=======
-
 
         ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.exo_player_view);
->>>>>>> aec82d55ff26e323c0068f42833dd6750d8f7874
 
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url1);
