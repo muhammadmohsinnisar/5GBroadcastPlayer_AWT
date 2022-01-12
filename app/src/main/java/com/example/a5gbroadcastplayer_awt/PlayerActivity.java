@@ -24,8 +24,8 @@ public class PlayerActivity extends AppCompatActivity{
     // Need to add a binder to the view
     //The context might be cause of failure
     //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
-    String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-
+    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+    String url1 = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,10 @@ public class PlayerActivity extends AppCompatActivity{
         playerView =  new PlayerView(getApplicationContext());
         playerView.findViewById(R.id.exo_player_view);
         playerView.setPlayer(player);
-        initializePlayer();
+        initializePlayer(url1);
     }
 
-    private void initializePlayer(){
+    private void initializePlayer(String source){
         DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(getApplicationContext());
         MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
