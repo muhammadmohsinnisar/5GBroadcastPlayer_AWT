@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
         <ImageView
-            android:id="@+id/exo_player_view"
+            android:id="@+id/image_view1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -60,8 +60,8 @@
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exo_player_view2"
+        <ImageView
+            android:id="@+id/image_view2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -84,8 +84,8 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exo_player_view3"
+        <ImageView
+            android:id="@+id/image_view3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -109,8 +109,8 @@
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exo_player_view4"
+        <ImageView
+            android:id="@+id/image_view4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -133,8 +133,8 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exo_player_view6"
+        <ImageView
+            android:id="@+id/image_view6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -158,8 +158,8 @@
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/exo_player_view5"
+        <ImageView
+            android:id="@+id/image_view5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
