@@ -1,13 +1,16 @@
 package com.example.a5gbroadcastplayer_awt;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.MediaSourceFactory;
@@ -25,7 +28,7 @@ public class PlayerActivity extends AppCompatActivity{
     //The context might be cause of failure
     //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
     //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-    String url1 = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
+    //String url1 = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +37,24 @@ public class PlayerActivity extends AppCompatActivity{
         playerView =  new PlayerView(getApplicationContext());
         playerView.findViewById(R.id.exo_player_view);
         playerView.setPlayer(player);
-        initializePlayer(url1);
+        Bundle extras = getIntent().getExtras();
+        String source = extras.getString("source");
+        ChannelActivity channelActivity = new ChannelActivity();
+        initializePlayer(source);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
+        stopPlayer();
+        PlayerActivity.this.finish();
+        startActivity(intent2);
     }
 
     private void initializePlayer(String source){
         DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(getApplicationContext());
-        MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
+        //MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
 
         // creating a variable for exoplayer with MediaSource
@@ -49,10 +64,15 @@ public class PlayerActivity extends AppCompatActivity{
 
         ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.exo_player_view);
-
         playerView.setPlayer(simpleExoPlayer);
-        MediaItem mediaItem = MediaItem.fromUri(url1);
+        MediaItem mediaItem = MediaItem.fromUri(source);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
+    }
+
+    private void stopPlayer(){
+        player.stop();
+        playerView.onPause();
+
     }
 }

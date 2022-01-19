@@ -3,24 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    >
+
+    <ImageView
+        android:id="@+id/image_logo"
+        android:layout_width="124dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_logo_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083"
+        tools:ignore="ContentDescription,MissingConstraints" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
-        <com.google.android.exoplayer2.ui.PlayerView
+        <ImageView
             android:id="@+id/exo_player_view"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -38,12 +53,12 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/exo_player_view2"

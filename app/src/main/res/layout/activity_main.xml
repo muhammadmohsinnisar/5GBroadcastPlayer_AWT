@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <Button
         android:id="@+id/bt_play"
         android:layout_width="wrap_content"

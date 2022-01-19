@@ -16,17 +16,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         toPlayer = findViewById(R.id.bt_play);
 
-       toPlayer.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               openActivity2();
-
-           }
-       });
+       toPlayer.setOnClickListener(v -> openActivity2());
     }
 
     private void openActivity2() {
-        Intent intent = new Intent(this, PlayerActivity.class);
+        Intent intent = new Intent(this, ChannelActivity.class);
         startActivity(intent);
     }
 
