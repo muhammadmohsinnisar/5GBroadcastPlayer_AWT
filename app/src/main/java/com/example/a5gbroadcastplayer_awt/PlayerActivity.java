@@ -35,7 +35,7 @@ public class PlayerActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
         playerView =  new PlayerView(getApplicationContext());
-        playerView.findViewById(R.id.exo_player_view);
+        playerView.findViewById(R.id.player);
         playerView.setPlayer(player);
         Bundle extras = getIntent().getExtras();
         String source = extras.getString("source");
@@ -63,7 +63,7 @@ public class PlayerActivity extends AppCompatActivity{
                 .build();
 
         ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
-        PlayerView playerView = findViewById(R.id.exo_player_view);
+        PlayerView playerView = findViewById(R.id.player);
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(source);
         simpleExoPlayer.addMediaItem(mediaItem);

@@ -45,56 +45,13 @@ tools:context=".MainActivity">
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/player"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
+            android:padding="10dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="22dp"
-            android:layout_marginTop="36dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginBottom="30dp"
-             />
-
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/textView_channel_name"
-        android:layout_width="335dp"
-        android:layout_height="41dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="48dp"
-        android:clipToOutline="true"
-        android:text="HBO Cinema"
-        android:textColor="@color/white"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/textView_Live_status"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.21"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView_Live_status"
-
-        android:layout_width="335dp"
-        android:layout_height="41dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="21dp"
-        android:clipToOutline="true"
-        android:text="LIVE"
-        android:textColor="#8b8989"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.21"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_channel_name"
-        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

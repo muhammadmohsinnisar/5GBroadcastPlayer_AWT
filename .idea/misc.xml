@@ -12,8 +12,8 @@
         <entry key="app/src/main/res/drawable/round_corner.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/layout/activity_channellist.xml" value="0.28776978417266186" />
         <entry key="app/src/main/res/layout/activity_exo_player.xml" value="0.16770833333333332" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.221875" />
-        <entry key="app/src/main/res/layout/activity_player.xml" value="0.221875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_player.xml" value="0.14" />
         <entry key="app/src/main/res/layout/card.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/exo_playback_control_view.xml" value="0.2" />
       </map>
