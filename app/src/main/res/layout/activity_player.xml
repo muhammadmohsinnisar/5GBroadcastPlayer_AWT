@@ -10,7 +10,7 @@ android:background="@color/black"
 tools:context=".MainActivity">
 
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_logo"
         android:layout_width="124dp"
         android:layout_height="55dp"

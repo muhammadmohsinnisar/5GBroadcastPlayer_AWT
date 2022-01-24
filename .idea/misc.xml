@@ -10,12 +10,14 @@
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2611111111111111" />
         <entry key="app/src/main/res/drawable/ic_logo_pic.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/drawable/round_corner.xml" value="0.16927083333333334" />
-        <entry key="app/src/main/res/layout/activity_channellist.xml" value="0.28776978417266186" />
+        <entry key="app/src/main/res/layout/activity_channellist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_exo_player.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_library.xml" value="0.1545138888888889" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_player.xml" value="0.14" />
         <entry key="app/src/main/res/layout/card.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/exo_playback_control_view.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/item_loading.xml" value="0.1545138888888889" />
       </map>
     </option>
   </component>

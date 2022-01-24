@@ -7,7 +7,7 @@
     android:background="@color/black"
     >
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_logo"
         android:layout_width="124dp"
         android:layout_height="55dp"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.083"
         tools:ignore="ContentDescription,MissingConstraints" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,10 +45,10 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView2"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -60,7 +60,7 @@
         app:layout_constraintStart_toEndOf="@+id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/image_logo">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,9 +72,9 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView3"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -84,7 +84,7 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -96,9 +96,9 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView4"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -109,7 +109,7 @@
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -121,9 +121,9 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView6"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -133,7 +133,7 @@
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/cardView4">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -145,9 +145,9 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView5"
         android:layout_width="0dp"
         android:layout_height="150dp"
@@ -158,7 +158,7 @@
         app:layout_constraintStart_toStartOf="@id/cardView"
         app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -170,7 +170,7 @@
             android:layout_marginBottom="30dp"
             android:keepScreenOn="true"
             app:use_controller="true" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
