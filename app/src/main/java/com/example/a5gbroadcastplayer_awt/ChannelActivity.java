@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.material.button.MaterialButton;
 
 public class ChannelActivity extends AppCompatActivity {
     CardView cardView1;
@@ -29,6 +30,7 @@ public class ChannelActivity extends AppCompatActivity {
     ImageView player4;
     ImageView player5;
     ImageView player6;
+    MaterialButton savedVideo;
 
 
     @Override
@@ -47,6 +49,7 @@ public class ChannelActivity extends AppCompatActivity {
         player4 = findViewById(R.id.image_view4);
         player5 = findViewById(R.id.image_view5);
         player6 = findViewById(R.id.image_view6);
+        savedVideo = findViewById(R.id.bt_saved);
         String brChannel = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
         String arteChannel = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
         String dashChannel = "http://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd";
@@ -97,6 +100,14 @@ public class ChannelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openActivity2("https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8");
+            }
+        });
+
+        savedVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent saved = new Intent(getApplicationContext(), RecyclerTestActivity.class);
+                startActivity(saved);
             }
         });
 

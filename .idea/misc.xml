@@ -15,9 +15,11 @@
         <entry key="app/src/main/res/layout/activity_library.xml" value="0.1545138888888889" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_player.xml" value="0.14" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_recycler.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/card.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/exo_playback_control_view.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/expandable_card_view.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/item_layout.xml" value="0.23258196721311475" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.1545138888888889" />
       </map>
