@@ -49,7 +49,7 @@ public class ChannelActivity extends AppCompatActivity {
         player4 = findViewById(R.id.image_view4);
         player5 = findViewById(R.id.image_view5);
         player6 = findViewById(R.id.image_view6);
-        savedVideo = findViewById(R.id.bt_saved);
+        //savedVideo = findViewById(R.id.bt_saved);
         String brChannel = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
         String arteChannel = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
         String dashChannel = "http://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd";
@@ -69,18 +69,21 @@ public class ChannelActivity extends AppCompatActivity {
        cardView1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 openActivity2(brChannel);
             }
         });
         cardView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 openActivity2(arteChannel);
             }
         });
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 openActivity2(dashChannel);
             }
         });
@@ -103,13 +106,13 @@ public class ChannelActivity extends AppCompatActivity {
             }
         });
 
-        savedVideo.setOnClickListener(new View.OnClickListener() {
+        /*savedVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent saved = new Intent(getApplicationContext(), RecyclerTestActivity.class);
                 startActivity(saved);
             }
-        });
+        });*/
 
     }
 
@@ -119,5 +122,6 @@ public class ChannelActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
         intent.putExtra("source", channel);
         startActivity(intent);
+        finish();
     }
 }

@@ -9,19 +9,35 @@
     android:background="@color/black"
     >
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/image_logo"
-        android:layout_width="124dp"
-        android:layout_height="55dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:src="@drawable/ic_logo_pic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083"
-        tools:ignore="ContentDescription,MissingConstraints" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/topPanel"
+        android:background="@color/gray"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_logo"
+                android:layout_width="124dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+                android:src="@drawable/ic_logo_pic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription,MissingConstraints" />
+
+
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
@@ -33,7 +49,7 @@
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo">
+        app:layout_constraintTop_toBottomOf="@+id/topPanel">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view1"
@@ -60,7 +76,7 @@
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardView"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo">
+        app:layout_constraintTop_toBottomOf="@+id/topPanel">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view2"
@@ -181,14 +197,6 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="205dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_saved"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="28dp"
-        android:background="@mipmap/download"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">5GBroadcastPlayer_AWT</string>
     <string name="go_to_player">Go to Player</string>
-
+    <string name="splash_logo">splash_logo</string>
+    <string name="awt_project">AWT Project</string>
+    <string name="nxt_gen_player">NXT GEN PLAYER</string>
 
 
     <string-array name="place_holders">
