@@ -25,4 +25,20 @@
         <item>19:00</item>
 
     </string-array>
+
+
+    <string-array name="channel_name">
+        <item>BrChannel</item>
+        <item>ArteChannel</item>
+        <item>Dash Channel</item>
+        <item>For Bigger Fun</item>
+        <item>Elephant Dream</item>
+    </string-array>
+    <string-array name="channels_URL">
+        <item>https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8</item>
+        <item>https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8</item>
+        <item>http://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd</item>
+        <item>http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4</item>
+        <item>http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</item>
+    </string-array>
 </resources>

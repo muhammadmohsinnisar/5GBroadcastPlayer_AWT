@@ -4,15 +4,22 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2078125" />
+        <entry key="../../.gradle/caches/transforms-3/3159055c9551f82f1565e348ad8dfcbe/transformed/jetified-exoplayer-ui-2.16.1/res/layout/exo_player_control_view.xml" value="0.14548611111111112" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/drawable/ic_fullscreen_close.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/drawable/ic_fullscreen_open.xml" value="0.25104166666666666" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2611111111111111" />
         <entry key="app/src/main/res/drawable/ic_logo_pic.xml" value="0.16927083333333334" />
         <entry key="app/src/main/res/drawable/round_corner.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout-land/activity_channellist.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/layout-land/activity_frame_player.xml" value="0.18474426807760141" />
+        <entry key="app/src/main/res/layout-land/activity_player.xml" value="0.23645833333333333" />
         <entry key="app/src/main/res/layout/activity_channel.xml" value="0.11319444444444444" />
+        <entry key="app/src/main/res/layout/activity_channel_recycler.xml" value="0.1758879781420765" />
         <entry key="app/src/main/res/layout/activity_channellist.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_exo_player.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/activity_frame_player.xml" value="0.14548611111111112" />
+        <entry key="app/src/main/res/layout/activity_fullscreen_video.xml" value="0.23258196721311475" />
         <entry key="app/src/main/res/layout/activity_library.xml" value="0.1545138888888889" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_player.xml" value="0.14" />
@@ -20,7 +27,9 @@
         <entry key="app/src/main/res/layout/activity_recycler.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/card.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/exo_playback_control_view.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/exo_player_control_view.xml" value="0.23258196721311475" />
         <entry key="app/src/main/res/layout/expandable_card_view.xml" value="0.146875" />
+        <entry key="app/src/main/res/layout/item_channel.xml" value="0.1758879781420765" />
         <entry key="app/src/main/res/layout/item_layout.xml" value="0.23258196721311475" />
         <entry key="app/src/main/res/layout/item_loading.xml" value="0.1545138888888889" />
       </map>

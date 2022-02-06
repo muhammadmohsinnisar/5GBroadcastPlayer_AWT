@@ -10,9 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.a5gbroadcastplayer_awt.Adapter.MyAdapter;
-import com.example.a5gbroadcastplayer_awt.Interface.ILoadMore;
-import com.example.a5gbroadcastplayer_awt.Model.Item;
+//import com.example.a5gbroadcastplayer_awt.Adapter.MyAdapter;
+//import com.example.a5gbroadcastplayer_awt.Interface.ILoadMore;
+//import com.example.a5gbroadcastplayer_awt.Model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ import java.util.UUID;
 
 public class RecyclerActivity extends AppCompatActivity {
 
-    List<Item> items = new ArrayList<>();
-    MyAdapter adapter;
+   // List<Item> items = new ArrayList<>();
+    //MyAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // setContentView(R.layout.activity_recycler);
+       /* setContentView(R.layout.activity_recycler);
 
         //RadomData
         random10Data();
@@ -35,8 +35,8 @@ public class RecyclerActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recycler);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new MyAdapter(recyclerView,this,items);
-        recyclerView.setAdapter(adapter);
+        //adapter = new MyAdapter(recyclerView,this,items);
+        //recyclerView.setAdapter(adapter);
 
         //set load more event
         adapter.setiLoadMore(new ILoadMore() {
@@ -76,5 +76,6 @@ public class RecyclerActivity extends AppCompatActivity {
             Item item = new Item(name, name.length());
 
         }
-    }
+    }*/
+}
 }

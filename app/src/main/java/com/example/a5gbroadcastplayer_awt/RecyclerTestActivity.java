@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.a5gbroadcastplayer_awt.Adapter.TestAdapter;
+import Adapter.TestAdapter;
+
 
 public class RecyclerTestActivity extends AppCompatActivity {
 

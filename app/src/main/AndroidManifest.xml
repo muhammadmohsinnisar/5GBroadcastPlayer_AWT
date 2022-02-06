@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.5GBroadcastPlayer_AWT">
         <activity
-            android:name=".MainActivity"
+            android:name=".PlayerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PlayerActivity"
+        <activity android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity android:name=".ChannelActivity" />
         <activity android:name=".ProfileActivity">
@@ -32,6 +32,7 @@
 
         <activity android:name=".RecyclerActivity"/>
         <activity android:name=".RecyclerTestActivity"/>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.a5gbroadcastplayer_awt.Adapter;
+package Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -33,8 +33,8 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
-    holder.myText1.setText(data1[position]);
-    holder.myText2.setText(data2[position]);
+        holder.myText1.setText(data1[position]);
+        holder.myText2.setText(data2[position]);
     }
 
     @Override
