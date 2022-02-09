@@ -34,7 +34,7 @@
         <item>For Bigger Fun</item>
         <item>Elephant Dream</item>
     </string-array>
-    <string-array name="channels_URL">
+    <string-array name="channel_URL">
         <item>https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8</item>
         <item>https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8</item>
         <item>http://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd</item>

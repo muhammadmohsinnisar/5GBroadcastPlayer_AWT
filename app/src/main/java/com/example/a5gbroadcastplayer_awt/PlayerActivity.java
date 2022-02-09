@@ -30,7 +30,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 public class PlayerActivity extends AppCompatActivity{
 
     private static final String TAG = "PlayerActivity.java";
-    private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
+    //private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
     ExoPlayer player;
     PlayerView playerView;
     PlayerControlView playerControlView;
@@ -70,7 +70,7 @@ public class PlayerActivity extends AppCompatActivity{
                         getSupportActionBar().show();
                     }
 
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
                     RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
                     params.width = params.MATCH_PARENT;
@@ -103,9 +103,11 @@ public class PlayerActivity extends AppCompatActivity{
         Bundle extras = getIntent().getExtras();
 
         //String source = extras.getString("source");
-//        String[] channelName = extras.getStringArray("name");
-        //String[] channelUrl = extras.getStringArray("url");
-        ChannelActivity channelActivity = new ChannelActivity();
+        String channelName = extras.getString("name");
+        String channelUrl = extras.getString("url");
+        //ChannelActivity channelActivity = new ChannelActivity();
+        //String channelUrl = channelActivity.getIntent().getExtras().getString("url");
+        //String channelName = channelActivity.getIntent().getExtras().getString("name");
         initializePlayer(channelUrl);
     }
 
@@ -118,7 +120,8 @@ public class PlayerActivity extends AppCompatActivity{
         startActivity(intent2);
     }
 
-    private void initializePlayer(String source){
+    private void initializePlayer(String url){
+        //Bundle extras = getIntent().getExtras();
         DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(getApplicationContext());
         //MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
@@ -137,7 +140,7 @@ public class PlayerActivity extends AppCompatActivity{
         Log.v(TAG, "height : " + h + " weight: " + w);
         playerView.setPlayer(simpleExoPlayer);
         playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
-        MediaItem mediaItem = MediaItem.fromUri(source);
+        MediaItem mediaItem = MediaItem.fromUri(url);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.play();
