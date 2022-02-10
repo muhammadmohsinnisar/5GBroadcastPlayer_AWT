@@ -30,6 +30,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
+
+    public interface onItemClicked {
+        void onItemClick(int position);
+    }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ShapeableImageView imageView;
         TextView channelNameView;
