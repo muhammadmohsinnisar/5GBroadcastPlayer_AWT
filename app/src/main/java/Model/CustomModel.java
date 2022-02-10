@@ -1,11 +1,17 @@
 package Model;
 
+import com.bumptech.glide.load.engine.Resource;
+
 public class CustomModel {
     private String channelName = null;
     private String channelUrl = null;
 
     public CustomModel(){
+    }
 
+    public CustomModel(String name, String url) {
+    this.channelName = name;
+    this.channelUrl = url;
     }
 
     public String getChannelName(){

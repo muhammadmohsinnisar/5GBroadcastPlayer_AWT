@@ -36,6 +36,7 @@ public class PlayerActivity extends AppCompatActivity{
     PlayerControlView playerControlView;
     ImageView fullscreenButton;
     boolean fullscreen = false;
+    String channelName, channelUrl;
     // creating a variable for exoplayer
     // Need to add a binder to the view
     //The context might be cause of failure
@@ -51,6 +52,9 @@ public class PlayerActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame_player);
+        channelName = getIntent().getExtras().getString("name");
+        channelUrl = getIntent().getExtras().getString("url");
+
         playerView =  new PlayerView(getApplicationContext());
         playerControlView = new PlayerControlView(getApplicationContext());
         playerView.findViewById(R.id.player);
@@ -100,14 +104,7 @@ public class PlayerActivity extends AppCompatActivity{
                 }
             }
         });
-        Bundle extras = getIntent().getExtras();
 
-        //String source = extras.getString("source");
-        String channelName = extras.getString("name");
-        String channelUrl = extras.getString("url");
-        //ChannelActivity channelActivity = new ChannelActivity();
-        //String channelUrl = channelActivity.getIntent().getExtras().getString("url");
-        //String channelName = channelActivity.getIntent().getExtras().getString("name");
         initializePlayer(channelUrl);
     }
 
@@ -135,11 +132,7 @@ public class PlayerActivity extends AppCompatActivity{
         PlayerView playerView = findViewById(R.id.player);
         PlayerControlView playerControlView = new PlayerControlView(this);
         //playerControlView.findViewById(R.id.exo_player_control_view);
-        int h = playerView.getResources().getConfiguration().screenHeightDp;
-        int w = playerView.getResources().getConfiguration().screenWidthDp;
-        Log.v(TAG, "height : " + h + " weight: " + w);
         playerView.setPlayer(simpleExoPlayer);
-        playerView.setResizeMode(AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT);
         MediaItem mediaItem = MediaItem.fromUri(url);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();

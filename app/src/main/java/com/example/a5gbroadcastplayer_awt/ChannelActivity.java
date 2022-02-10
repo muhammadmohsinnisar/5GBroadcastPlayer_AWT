@@ -1,7 +1,9 @@
 package com.example.a5gbroadcastplayer_awt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,62 +17,49 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import Adapter.CustomAdapter;
+import Model.CustomModel;
 
-public class ChannelActivity extends AppCompatActivity implements View.OnClickListener {
+public class ChannelActivity extends AppCompatActivity implements CustomAdapter.onItemClicked {
 
     MaterialButton savedVideo;
     RecyclerView recycler;
+    private Context context;
+    public List<CustomModel> dataSet;
     TextView channelText;
     TextView channelText2;
     ShapeableImageView box;
     String[] channelName, channelURL;
-    //String cN, cU;
 
-    /*public String getCnName() {
-        return cnName;
-    }
-
-    public void setCnName(String[] cnName) {
-        cnName = getChannelName();
-        this.cnName = String.valueOf(cnName);
-    }
-
-    public String getCnUrl() {
-        return cnUrl;
-    }
-
-    public void setCnUrl(String[] cnUrl) {
-        cnUrl = getChannelUrl(itemPosition);
-        this.cnUrl = String.valueOf(cnUrl);
-    }
-
-    String cnName, cnUrl;
-    int i;
-    */
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel_recycler);
         recycler = findViewById(R.id.recycler);
+        context = this;
         box = findViewById(R.id.image_logo);
         channelText = findViewById(R.id.channel_name);
         channelText2 = findViewById(R.id.testTextView);
         channelName = getResources().getStringArray(R.array.channel_name);
         channelURL = getResources().getStringArray(R.array.channel_URL);
-        //cN = channelText.toString();
-        //cU = channelText2.toString();
-        //CustomAdapter adapter = new CustomAdapter();
 
+        CustomModel customModel = new CustomModel();
+        List<CustomModel> dataSet = new ArrayList<>();
+        CustomAdapter customAdapter = new CustomAdapter(dataSet, context);
+        doInBackground(dataSet);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,RecyclerView.VERTICAL,false);
-        List<CustomObject> dataSet = new ArrayList<>();
-        CustomAdapter customAdapter = new CustomAdapter(dataSet,ChannelActivity.this, channelName, channelURL);
-        savedVideo = findViewById(R.id.bt_savedvideo);
+        recycler.setLayoutManager(gridLayoutManager);
+        recycler.setAdapter(customAdapter);
+        customAdapter.setOnClick(this::onItemClick);
 
+        savedVideo = findViewById(R.id.bt_savedvideo);
         savedVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,48 +67,52 @@ public class ChannelActivity extends AppCompatActivity implements View.OnClickLi
                 startActivity(savedVideo);
             }
         });
-        recycler.setLayoutManager(gridLayoutManager);
-        recycler.setAdapter(customAdapter);
-        recycler.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              //int position = recycler.getLayoutManager().getPosition(v);
-              Toast.makeText(getApplicationContext(),"click works!!!",Toast.LENGTH_LONG).show();
-            }
-        });
-
         //TODO replace ImageView with View and check with the link
 
-        //TODO For now obj are created manually for every channel, want to replace it with function that automatically creates objects
-        //Objects representing Items in recyclerview
-        CustomObject ob1 = new CustomObject(getChannelName(0), getChannelUrl(0));
-        CustomObject ob2 = new CustomObject(getChannelName(1), getChannelUrl(1));
-        CustomObject ob3 = new CustomObject(getChannelName(2), getChannelUrl(2));
-        CustomObject ob4 = new CustomObject(getChannelName(3),getChannelUrl(3));
-        CustomObject ob5 = new CustomObject(getChannelName(4),getChannelUrl(4));
+    }
 
-        //DONE Object creation restricted to resource available.
-        //TODO An object to be created against every resource.
-        //TODO Map resource to each object, better to use looping to avoid manual creation of object.
-        dataSet.add(ob1);
-        dataSet.add(ob2);
-        dataSet.add(ob3);
-        dataSet.add(ob4);
-        dataSet.add(ob5);
 
-        //TODO Set the channelTextView name to Channels name from Resource
-        //String[] st_name = getResources().getStringArray(R.array.channel_name);
-        //String name = st_name.toString();
-        //channnelText.setText(name);
-        //TODO Objects are not being added correctly for now. Need to resolve the position issue from resource.
-        //TODO Add onItemClickListener for items in recyclerView leading to the Player.
-        //TODO Sort out how to get ChannelName and ChannelURL from resource into String for every object.
-        //TODO Use Object to create Clickable Items in recyclerview, use these items for accessing player
-        //TODO Add SavedVideo Button again.
+
+    @Override
+    public void onItemClick(int position) {
+        CustomObject object = new CustomObject();
+        object.setChannelName(getChannelName(position));
+        object.setChannelUrl(getChannelUrl(position));
+        Intent in = new Intent(this, PlayerActivity.class);
+        String channelName = object.getChannelName();
+        String channelURL = object.getChannelUrl();
+        in.putExtra("name", channelName);
+        in.putExtra("url", channelURL);
+        startActivity(in);
+        Toast.makeText(this,"This click works!!!onItemClick!!",Toast.LENGTH_LONG).show();
+    }
+
+    public void doInBackground(List<CustomModel> list){
+        String[] channelName = getResources().getStringArray(R.array.channel_name);
+        String[] channelURL = getResources().getStringArray(R.array.channel_URL);
+        int j = channelURL.length;
+
+        //CustomObject object = new CustomObject();
+        if(channelName != null){
+            for (int i = 0; i < j; i++) {
+                String name = getChannelName(i);
+                String url = getChannelUrl(i);
+                CustomObject object = new CustomObject(name,url);
+                object.setChannelName(name);
+                object.setChannelUrl(url);
+                list.add(object);
+            }
+
+           // Log.d("List generated",""+dataSet.size());
+
+        } else {
+            Log.d("List not generated",""+dataSet.size());
+            Toast.makeText(context,"doInbackgroud failed!!!",Toast.LENGTH_LONG).show();
+        }
     }
 
     public void openActivity2(int i) {
-        channelURL = getResources().getStringArray(R.array.channel_URL);
+        //channelURL = getResources().getStringArray(R.array.channel_URL);
         String cU = channelURL[i];
         Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
         intent.putExtra("url", cU);
@@ -151,7 +144,6 @@ public class ChannelActivity extends AppCompatActivity implements View.OnClickLi
         return url;
     }
 
-    @Override
     public void onClick(View view) {
         int itemPosition = recycler.getChildLayoutPosition(view);
         Intent intent = new Intent();
@@ -161,7 +153,7 @@ public class ChannelActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public static class CustomObject{
+    public static class CustomObject extends CustomModel {
         String channelName;
         String channelUrl;
         int itemPos;
@@ -175,6 +167,9 @@ public class ChannelActivity extends AppCompatActivity implements View.OnClickLi
         public CustomObject(String cN, String cU) {
             channelName = cN;
             channelUrl = cU;
+        }
+
+        public CustomObject() {
         }
     }
 
@@ -206,11 +201,12 @@ public class ChannelActivity extends AppCompatActivity implements View.OnClickLi
     //TODO This function will take the number of items in resource and create objects accordingly.
     public void objectCreator (){
         for (int i = 0; i < size(); i++) {
-            List<CustomObject> dataSet = new ArrayList<>();
-            CustomObject object = new CustomObject(getChannelName(i),getChannelUrl(i));
+            List<CustomModel> dataSet = new ArrayList<>();
+            CustomModel object = new CustomModel(channelName[i],channelURL[i]);
             dataSet.add(object);
 
         }
     }
+
 
 }
