@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
@@ -29,6 +30,10 @@ import Model.CustomModel;
 public class ChannelActivity extends AppCompatActivity implements CustomAdapter.onItemClicked {
 
     MaterialButton savedVideo;
+    MaterialButton casting;
+    MaterialButton search;
+    MaterialButton viewLayout;
+    FloatingActionButton createChannel;
     RecyclerView recycler;
     private Context context;
     public List<CustomModel> dataSet;
@@ -59,13 +64,44 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         recycler.setLayoutManager(gridLayoutManager);
         recycler.setAdapter(customAdapter);
         customAdapter.setOnClick(this::onItemClick);
-
+        casting = findViewById(R.id.bt_cast);
+        search = findViewById(R.id.bt_search);
+        viewLayout = findViewById(R.id.bt_view);
         savedVideo = findViewById(R.id.bt_savedvideo);
+        createChannel = findViewById(R.id.bt_channeladd);
         savedVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent savedVideo = new Intent(getApplicationContext(), RecyclerTestActivity.class);
                 startActivity(savedVideo);
+            }
+        });
+
+        viewLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"View change button", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Search button", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        casting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"Casting button", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        createChannel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"create channel button", Toast.LENGTH_LONG).show();
             }
         });
         //TODO replace ImageView with View and check with the link
