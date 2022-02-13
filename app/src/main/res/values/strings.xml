@@ -33,6 +33,10 @@
         <item>Dash Channel</item>
         <item>For Bigger Fun</item>
         <item>Elephant Dream</item>
+        <item>Dolby Multichannel</item>
+        <item>Sample From Apple</item>
+        <item>Big Bucket Bunny</item>
+
     </string-array>
     <string-array name="channel_URL">
         <item>https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8</item>
@@ -40,5 +44,10 @@
         <item>http://livesim.dashif.org/livesim/segtimeline_1/testpic_2s/Manifest.mpd</item>
         <item>http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4</item>
         <item>http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4</item>
+        <item>http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multichannel_subs.m3u8</item>
+        <item>http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8</item>
+        <item>https://multiplatform-f.akamaihd.net/i/multi/will/bunny/big_buck_bunny_,640x360_400,640x360_700,640x360_1000,950x540_1500,.f4v.csmil/master.m3u8</item>
+
+
     </string-array>
 </resources>

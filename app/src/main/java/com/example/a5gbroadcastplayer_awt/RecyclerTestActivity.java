@@ -13,7 +13,7 @@ import Adapter.TestAdapter;
 public class RecyclerTestActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    String s1[], s2[];
+    String[] s1, s2;
 
 
     @Override

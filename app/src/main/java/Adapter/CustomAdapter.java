@@ -46,7 +46,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             super(view);
             // Define click listener for the ViewHolder's View
             channelNameView =  (TextView) view.findViewById(R.id.channel_name);
-            testTextView = (TextView) view.findViewById(R.id.testTextView);
+           // testTextView = (TextView) view.findViewById(R.id.testTextView);
             imageView = (ShapeableImageView) view.findViewById(R.id.image_channel);
         }
 

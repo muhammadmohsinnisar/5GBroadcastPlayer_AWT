@@ -30,7 +30,6 @@
 
         </activity>
 
-        <activity android:name=".RecyclerActivity"/>
         <activity android:name=".RecyclerTestActivity"/>
 
     </application>

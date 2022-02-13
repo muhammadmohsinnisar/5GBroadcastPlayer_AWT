@@ -26,77 +26,26 @@ import com.google.android.exoplayer2.upstream.DefaultDataSource;
 public class PlayerActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "PlayerActivity.java";
-    //private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
     ExoPlayer simpleExoPlayer;
-    //ExoPlayer player;
     PlayerView playerView;
-    PlayerControlView playerControlView;
     String channelName, channelUrl;
-    // creating a variable for exoplayer
-    // Need to add a binder to the view
-    //The context might be cause of failure
 
 
     //TODO Height/Width control does not work
     //TODO Find a way to use exo_control_view
-    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
-    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
-    //String url1 = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature( Window.FEATURE_NO_TITLE );
-
         getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_frame_player);
         channelName = getIntent().getExtras().getString("name");
         channelUrl = getIntent().getExtras().getString("url");
-
         playerView =  new PlayerView(getApplicationContext());
-        //playerControlView = new PlayerControlView(getApplicationContext());
         playerView.findViewById(R.id.player);
-        //playerControlView.findViewById(R.id.controls);
-        //playerControlView.setPlayer(simpleExoPlayer);
         playerView.setPlayer(simpleExoPlayer);
-
-
-        //fullscreenButton = playerView.findViewById(R.id.exo_fullscreen_icon);
-
-      /* fullscreenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(fullscreen) {
-                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(PlayerActivity.this, R.drawable.ic_fullscreen_open));
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-                    if(getSupportActionBar() != null){
-                        getSupportActionBar().show();
-                    }
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
-                    params.width = params.MATCH_PARENT;
-                    params.height = (int) ( 200 * getApplicationContext().getResources().getDisplayMetrics().density);
-                    playerView.setLayoutParams(params);
-                    fullscreen = false;
-                }else{
-                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(PlayerActivity.this, R.drawable.ic_fullscreen_close));
-                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
-                            |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                            |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-                    if(getSupportActionBar() != null){
-                        getSupportActionBar().hide();
-                    }
-                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
-                    params.width = params.MATCH_PARENT;
-                    params.height = params.MATCH_PARENT;
-                    playerView.setLayoutParams(params);
-                    fullscreen = true;
-                }
-            }
-        });*/
-
         initializePlayer(channelUrl);
     }
 
@@ -110,16 +59,9 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initializePlayer(String url){
-        //Bundle extras = getIntent().getExtras();
         DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(getApplicationContext());
         //MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
-
-        // creating a variable for exoplayer with MediaSource
-        //player = new ExoPlayer.Builder(getApplicationContext())
-        //        .setMediaSourceFactory(mediaSourceFactory)
-        //        .build();
-
         simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.player);
         PlayerControlView playerControlView = new PlayerControlView(this);

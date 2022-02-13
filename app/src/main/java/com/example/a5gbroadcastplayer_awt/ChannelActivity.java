@@ -47,7 +47,7 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         context = this;
         box = findViewById(R.id.image_logo);
         channelText = findViewById(R.id.channel_name);
-        channelText2 = findViewById(R.id.testTextView);
+        //channelText2 = findViewById(R.id.testTextView);
         channelName = getResources().getStringArray(R.array.channel_name);
         channelURL = getResources().getStringArray(R.array.channel_URL);
 
