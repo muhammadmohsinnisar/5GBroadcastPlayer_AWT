@@ -42,7 +42,7 @@ tools:context=".MainActivity">
         tools:ignore="MissingConstraints">
 
         <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/player"
+            android:id="@+id/player_version1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -50,8 +50,16 @@ tools:context=".MainActivity">
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:padding="10dp"
-            app:controller_layout_id="@layout/custom_exo_player_control_view"
-            app:use_controller="true"/>
+            app:controller_layout_id="@layout/exo_playback_control_view"
+            app:use_controller="true" />
+
+        <com.google.android.exoplayer2.ui.PlayerControlView
+            android:id="@+id/controls_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player_version1"
+            app:controller_layout_id="@layout/exo_playback_control_view"
+            app:show_timeout="3" />
     </RelativeLayout>
 
 
