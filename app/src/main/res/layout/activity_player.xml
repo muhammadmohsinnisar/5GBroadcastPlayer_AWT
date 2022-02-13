@@ -49,7 +49,9 @@ tools:context=".MainActivity">
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:padding="10dp" />
+            android:padding="10dp"
+            app:controller_layout_id="@layout/custom_exo_player_control_view"
+            app:use_controller="true"/>
     </RelativeLayout>
 
 

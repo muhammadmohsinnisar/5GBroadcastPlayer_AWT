@@ -26,6 +26,7 @@
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.14" />
         <entry key="app/src/main/res/layout/activity_recycler.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/card.xml" value="0.16770833333333332" />
+        <entry key="app/src/main/res/layout/custom_exo_player_view.xml" value="0.14310109289617487" />
         <entry key="app/src/main/res/layout/exo_playback_control_view.xml" value="0.2" />
         <entry key="app/src/main/res/layout/exo_player_control_view.xml" value="0.23258196721311475" />
         <entry key="app/src/main/res/layout/expandable_card_view.xml" value="0.146875" />

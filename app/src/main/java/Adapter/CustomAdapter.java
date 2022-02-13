@@ -88,7 +88,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.channelNameView.setText(customModel.getChannelName());
-        viewHolder.testTextView.setText(customModel.getChannelUrl());
+        //viewHolder.testTextView.setText(customModel.getChannelUrl());
         viewHolder.imageView.setBackground(context.getDrawable(R.drawable.ic_launcher_background));
       // Glide.with(context).
             //   load("https://media.istockphoto.com/photos/fresh-citrus-juices-picture-id158268808?k=20&m=158268808&s=612x612&w=0&h=9mUMCBDaY-JYqR7m9r_mi0-Ta0RIebZ3DpxyimSQ7Fc=").into(viewHolder.getImageView());

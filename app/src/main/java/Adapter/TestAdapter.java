@@ -13,7 +13,7 @@ import com.example.a5gbroadcastplayer_awt.R;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
 
-    String data1[], data2[];
+    String[] data1, data2;
 
     Context context;
 

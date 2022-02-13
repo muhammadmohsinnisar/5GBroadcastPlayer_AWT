@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,6 +18,7 @@ import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -27,11 +30,12 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.StyledPlayerControlView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
-public class PlayerActivity extends AppCompatActivity{
+public class PlayerActivity extends AppCompatActivity implements View.OnClickListener{
 
     private static final String TAG = "PlayerActivity.java";
     //private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
-    ExoPlayer player;
+    ExoPlayer simpleExoPlayer;
+    //ExoPlayer player;
     PlayerView playerView;
     PlayerControlView playerControlView;
     ImageView fullscreenButton;
@@ -58,13 +62,17 @@ public class PlayerActivity extends AppCompatActivity{
         playerView =  new PlayerView(getApplicationContext());
         playerControlView = new PlayerControlView(getApplicationContext());
         playerView.findViewById(R.id.player);
-        playerControlView.findViewById(R.id.exo_control_view);
-        playerView.setPlayer(player);
-        fullscreenButton = playerView.findViewById(R.id.exo_fullscreen_icon);
+        playerControlView.findViewById(R.id.controls);
+        playerControlView.setPlayer(simpleExoPlayer);
+        playerView.setPlayer(simpleExoPlayer);
 
-        fullscreenButton.setOnClickListener(new View.OnClickListener() {
+
+        //fullscreenButton = playerView.findViewById(R.id.exo_fullscreen_icon);
+
+        /*fullscreenButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"The fullscreen click!!",Toast.LENGTH_LONG).show();
                 if(fullscreen) {
                     fullscreenButton.setImageDrawable(ContextCompat.getDrawable(PlayerActivity.this, R.drawable.ic_fullscreen_open));
 
@@ -95,7 +103,7 @@ public class PlayerActivity extends AppCompatActivity{
 
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
+                    FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) playerView.getLayoutParams();
                     params.width = params.MATCH_PARENT;
                     params.height = params.MATCH_PARENT;
                     playerView.setLayoutParams(params);
@@ -103,18 +111,18 @@ public class PlayerActivity extends AppCompatActivity{
                     fullscreen = true;
                 }
             }
-        });
+        });*/
 
         initializePlayer(channelUrl);
     }
 
     @Override
     public void onBackPressed() {
+        Thread.currentThread().interrupt();
         super.onBackPressed();
         Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
         stopPlayer();
-        PlayerActivity.this.finish();
-        startActivity(intent2);
+        this.finish();
     }
 
     private void initializePlayer(String url){
@@ -124,27 +132,29 @@ public class PlayerActivity extends AppCompatActivity{
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
 
         // creating a variable for exoplayer with MediaSource
-        player = new ExoPlayer.Builder(getApplicationContext())
-                .setMediaSourceFactory(mediaSourceFactory)
-                .build();
+        //player = new ExoPlayer.Builder(getApplicationContext())
+        //        .setMediaSourceFactory(mediaSourceFactory)
+        //        .build();
 
-        ExoPlayer simpleExoPlayer = new ExoPlayer.Builder(this).build();
+        simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.player);
         PlayerControlView playerControlView = new PlayerControlView(this);
         //playerControlView.findViewById(R.id.exo_player_control_view);
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url);
+
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
-        simpleExoPlayer.play();
-
+        simpleExoPlayer.setPlayWhenReady(true);
     }
 
     private void stopPlayer(){
-        player.stop();
+        simpleExoPlayer.stop();
         playerView.onPause();
         playerView.removeView(playerView);
-        player.release();
+        simpleExoPlayer.release();
+        simpleExoPlayer.clearMediaItems();
+
     }
 
     //-------------------------------------------------------ANDROID LIFECYCLE---------------------------------------------------------------------------------------------
@@ -177,6 +187,11 @@ public class PlayerActivity extends AppCompatActivity{
     protected void onDestroy() {
         super.onDestroy();
         Log.v(TAG, "onDestroy()...");
-        player.release();
+        simpleExoPlayer.release();
+    }
+
+    @Override
+    public void onClick(View view) {
+    Toast.makeText(getApplicationContext(),"The OnClick works!!", Toast.LENGTH_LONG).show();
     }
 }
