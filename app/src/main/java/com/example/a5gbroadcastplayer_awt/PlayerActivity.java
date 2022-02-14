@@ -79,13 +79,13 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         PlayerView playerView = findViewById(R.id.player);
         PlayerControlView playerControlView = new PlayerControlView(this);
         //playerControlView.findViewById(R.id.exo_player_control_view);
-        //playerView.setPlayer(simpleExoPlayer);
+        playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url);
 
         loadManifest();
-        //simpleExoPlayer.addMediaItem(mediaItem);
-        //simpleExoPlayer.prepare();
-        //simpleExoPlayer.setPlayWhenReady(true);
+        simpleExoPlayer.addMediaItem(mediaItem);
+        simpleExoPlayer.prepare();
+        simpleExoPlayer.setPlayWhenReady(true);
     }
 
     public static String docToString(Document doc) {
