@@ -6,8 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -51,6 +54,9 @@ public class PlayerActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature( Window.FEATURE_NO_TITLE );
+        getWindow().setFlags( WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN );
         setContentView(R.layout.activity_frame_player);
         channelName = getIntent().getExtras().getString("name");
         channelUrl = getIntent().getExtras().getString("url");
@@ -58,7 +64,7 @@ public class PlayerActivity extends AppCompatActivity{
         playerView =  new PlayerView(getApplicationContext());
         playerControlView = new PlayerControlView(getApplicationContext());
         playerView.findViewById(R.id.player);
-        playerControlView.findViewById(R.id.exo_control_view);
+        playerControlView.findViewById(R.id.controls);
         playerView.setPlayer(simpleExoPlayer);
         fullscreenButton = playerView.findViewById(R.id.exo_fullscreen_icon);
 
@@ -110,6 +116,7 @@ public class PlayerActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
+        Thread.currentThread().interrupt();
         super.onBackPressed();
         Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
         stopPlayer();
@@ -136,8 +143,7 @@ public class PlayerActivity extends AppCompatActivity{
         MediaItem mediaItem = MediaItem.fromUri(url);
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
-        simpleExoPlayer.play();
-
+        simpleExoPlayer.setPlayWhenReady(true);
     }
 
     private void stopPlayer(){
@@ -145,6 +151,7 @@ public class PlayerActivity extends AppCompatActivity{
         playerView.onPause();
         playerView.removeView(playerView);
         simpleExoPlayer.release();
+        simpleExoPlayer.clearMediaItems();
 
     }
 

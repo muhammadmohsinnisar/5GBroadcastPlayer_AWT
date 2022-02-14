@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/player_frame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@style/FullscreenTheme"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
     android:background="@color/black">
 
     <com.google.android.exoplayer2.ui.PlayerView
@@ -11,6 +12,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:keepScreenOn="true"
-        />
 
-</FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.exoplayer2.ui.PlayerControlView
+        android:id="@+id/controls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/player"
+        app:controller_layout_id="@layout/exo_player_control_view"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:show_timeout="3" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

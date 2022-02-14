@@ -29,7 +29,6 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSource;
 import com.google.android.exoplayer2.util.NotificationUtil;
 import com.google.android.exoplayer2.util.Util;
 
-import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.json.JSONStringer;
 
 import java.io.IOException;
@@ -40,7 +39,7 @@ public class MyDownloadService extends DownloadService {
 
     private static final int JOB_ID = 1;
     private static final int FOREGROUND_NOTIFICATION_ID = 1;
-    private static HttpDataSource.@MonotonicNonNull Factory httpDataSourceFactory;
+    private static HttpDataSource.Factory httpDataSourceFactory;
 
     public MyDownloadService() {
         super(

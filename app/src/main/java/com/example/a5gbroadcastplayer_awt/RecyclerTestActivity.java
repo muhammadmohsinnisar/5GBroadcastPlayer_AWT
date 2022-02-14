@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
 
 import Adapter.TestAdapter;
@@ -15,14 +17,16 @@ import Adapter.TestAdapter;
 public class RecyclerTestActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    String s1[], s2[];
+    String[] s1, s2;
+    MaterialButton search;
+
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler);
-
+        search = findViewById(R.id.bt_search);
         recyclerView = findViewById(R.id.recycler);
 
         s1 = getResources().getStringArray(R.array.place_holders);

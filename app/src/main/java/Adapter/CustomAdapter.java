@@ -38,7 +38,7 @@ import com.google.android.exoplayer2.upstream.cache.NoOpCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+
 
 import java.io.File;
 import java.util.List;
@@ -52,14 +52,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     private Context context;
     private onItemClicked onClick;
     private onDownloadClick onDownload;
-    private static DataSource.@MonotonicNonNull Factory dataSourceFactory;
-    private static HttpDataSource.@MonotonicNonNull Factory httpDataSourceFactory;
-    private static @MonotonicNonNull DatabaseProvider databaseProvider;
-    private static @MonotonicNonNull File downloadDirectory;
-    private static @MonotonicNonNull Cache downloadCache;
-    private static @MonotonicNonNull DownloadManager downloadManager;
-    private static @MonotonicNonNull DownloadTracker downloadTracker;
-    private static @MonotonicNonNull DownloadNotificationHelper downloadNotificationHelper;
+    private static DataSource.Factory dataSourceFactory;
+    private static HttpDataSource.Factory httpDataSourceFactory;
+    private static DatabaseProvider databaseProvider;
+    private static File downloadDirectory;
+    private static Cache downloadCache;
+    private static DownloadManager downloadManager;
+    private static DownloadTracker downloadTracker;
+    private static DownloadNotificationHelper downloadNotificationHelper;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -89,7 +89,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             super(view);
             // Define click listener for the ViewHolder's View
             channelNameView =  (TextView) view.findViewById(R.id.channel_name);
-            testTextView = (TextView) view.findViewById(R.id.testTextView);
             imageView = (ShapeableImageView) view.findViewById(R.id.image_channel);
             download = (ImageButton) view.findViewById(R.id.download_button);
         }
@@ -133,10 +132,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.channelNameView.setText(customModel.getChannelName());
-        viewHolder.testTextView.setText(customModel.getChannelUrl());
-        viewHolder.imageView.setBackground(context.getDrawable(R.drawable.ic_launcher_background));
-      // Glide.with(context).
-            //   load("https://media.istockphoto.com/photos/fresh-citrus-juices-picture-id158268808?k=20&m=158268808&s=612x612&w=0&h=9mUMCBDaY-JYqR7m9r_mi0-Ta0RIebZ3DpxyimSQ7Fc=").into(viewHolder.getImageView());
+       //viewHolder.testTextView.setText(customModel.getChannelUrl());
+        //viewHolder.imageView.setBackground(context.getDrawable(R.drawable.ic_launcher_background));
+       Glide.with(context).
+               load("https://media.istockphoto.com/photos/fresh-citrus-juices-picture-id158268808?k=20&m=158268808&s=612x612&w=0&h=9mUMCBDaY-JYqR7m9r_mi0-Ta0RIebZ3DpxyimSQ7Fc=").into(viewHolder.getImageView());
 
 
         viewHolder.channelNameView.setOnClickListener(new View.OnClickListener(){
