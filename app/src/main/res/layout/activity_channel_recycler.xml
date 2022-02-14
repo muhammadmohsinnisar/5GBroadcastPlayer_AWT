@@ -31,20 +31,66 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription,MissingConstraints" />
 
+
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_savedvideo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="end"
-                android:layout_marginEnd="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@mipmap/folder"
-                android:outlineAmbientShadowColor="@color/white"
-                android:outlineSpotShadowColor="@color/white"
+                android:layout_marginEnd="10dp"
                 android:shadowColor="@color/white"
-
+                android:outlineAmbientShadowColor="@color/white"
                 app:rippleColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
 
-                tools:ignore="SpeakableTextPresentCheck" />
+                android:layout_gravity="end"
+
+                />
+
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_cast"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/cast"
+                android:layout_marginEnd="10dp"
+                android:shadowColor="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                app:rippleColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_gravity="end"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_view"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/list"
+                android:layout_marginEnd="10dp"
+                android:shadowColor="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                app:rippleColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_gravity="end"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bt_search"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/loupe"
+                android:layout_marginEnd="10dp"
+                android:shadowColor="@color/white"
+                android:outlineAmbientShadowColor="@color/white"
+                app:rippleColor="@color/white"
+                android:outlineSpotShadowColor="@color/white"
+                android:layout_gravity="end"
+
+                />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -52,6 +98,7 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -65,6 +112,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/bt_channeladd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
