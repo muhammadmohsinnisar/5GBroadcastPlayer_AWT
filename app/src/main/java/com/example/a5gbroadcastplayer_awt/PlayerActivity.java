@@ -2,6 +2,8 @@ package com.example.a5gbroadcastplayer_awt;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,13 +12,21 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
+import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.MediaSourceFactory;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.android.exoplayer2.ui.PlayerControlView;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.ui.StyledPlayerControlView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
 import org.w3c.dom.Document;
@@ -36,16 +46,26 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-public class PlayerActivity extends AppCompatActivity implements View.OnClickListener{
+public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = "PlayerActivity.java";
+    //private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
     ExoPlayer simpleExoPlayer;
     PlayerView playerView;
+    PlayerControlView playerControlView;
+    ImageView fullscreenButton;
+    boolean fullscreen = false;
     String channelName, channelUrl;
+    // creating a variable for exoplayer
+    // Need to add a binder to the view
+    //The context might be cause of failure
 
 
     //TODO Height/Width control does not work
     //TODO Find a way to use exo_control_view
+    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4";
+    //String url1 = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4";
+    //String url1 = "https://bildlivehls-lh.akamaihd.net/i/bildtv247dach_1@107603/master.m3u8";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +77,57 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         channelName = getIntent().getExtras().getString("name");
         channelUrl = getIntent().getExtras().getString("url");
         playerView = new PlayerView(getApplicationContext());
+
+        playerView =  new PlayerView(getApplicationContext());
+        playerControlView = new PlayerControlView(getApplicationContext());
         playerView.findViewById(R.id.player);
+        playerControlView.findViewById(R.id.controls);
         playerView.setPlayer(simpleExoPlayer);
+        fullscreenButton = playerView.findViewById(R.id.exo_fullscreen_icon);
+
+        fullscreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(fullscreen) {
+                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(PlayerActivity.this, R.drawable.ic_fullscreen_open));
+
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+
+                    if(getSupportActionBar() != null){
+                        getSupportActionBar().show();
+                    }
+
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
+                    params.width = params.MATCH_PARENT;
+                    params.height = (int) ( 200 * getApplicationContext().getResources().getDisplayMetrics().density);
+                    playerView.setLayoutParams(params);
+
+                    fullscreen = false;
+                }else{
+                    fullscreenButton.setImageDrawable(ContextCompat.getDrawable(PlayerActivity.this, R.drawable.ic_fullscreen_close));
+
+                    getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN
+                            |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                            |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+                    if(getSupportActionBar() != null){
+                        getSupportActionBar().hide();
+                    }
+
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) playerView.getLayoutParams();
+                    params.width = params.MATCH_PARENT;
+                    params.height = params.MATCH_PARENT;
+                    playerView.setLayoutParams(params);
+
+                    fullscreen = true;
+                }
+            }
+        });
+
         initializePlayer(channelUrl);
     }
 
@@ -68,13 +137,21 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         super.onBackPressed();
         Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
         stopPlayer();
-        this.finish();
+        PlayerActivity.this.finish();
+        startActivity(intent2);
     }
 
     private void initializePlayer(String url){
+        //Bundle extras = getIntent().getExtras();
         DefaultDataSource.Factory mediaDataSourceFactory = new DefaultDataSource.Factory(getApplicationContext());
         //MediaSource mediaSource = new ProgressiveMediaSource.Factory(mediaDataSourceFactory).createMediaSource(MediaItem.fromUri(STREAM_URL));
         MediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(mediaDataSourceFactory);
+
+        // creating a variable for exoplayer with MediaSource
+       /* player = new ExoPlayer.Builder(getApplicationContext())
+                .setMediaSourceFactory(mediaSourceFactory)
+                .build();*/
+
         simpleExoPlayer = new ExoPlayer.Builder(this).build();
         PlayerView playerView = findViewById(R.id.player);
         PlayerControlView playerControlView = new PlayerControlView(this);
@@ -82,101 +159,15 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url);
 
-        loadManifest();
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.setPlayWhenReady(true);
     }
 
-    public static String docToString(Document doc) {
-        try {
-            StringWriter sw = new StringWriter();
-            TransformerFactory tf = TransformerFactory.newInstance();
-            Transformer transformer = tf.newTransformer();
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
-            transformer.setOutputProperty(OutputKeys.METHOD, "xml");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-
-            transformer.transform(new DOMSource(doc), new StreamResult(sw));
-            return sw.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException("Error converting to String", ex);
-        }
-    }
-
-    public void writeFileOnInternalStorage(Context mcoContext, String sFileName, String sBody){
-        File dir = new File(mcoContext.getFilesDir(), "mydir");
-        if(!dir.exists()){
-            dir.mkdir();
-        }
-        try {
-            File gpxfile = new File(dir, sFileName);
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(sBody);
-            writer.flush();
-            writer.close();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public void loadManifest() {
-
-        try {
-            //Toast.makeText(context,"load channels",Toast.LENGTH_SHORT).show();
-            URL url = new URL(channelUrl);
-            Log.d("manifest","Loading manifest from url: " + url.toString());
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(new InputSource(url.openStream()));
-            doc.getDocumentElement().normalize();
-
-            Log.d("manifest", docToString(doc));
-
-            writeFileOnInternalStorage(this, "test.xml", docToString(doc));
-
-            NodeList nodeList = doc.getElementsByTagName("channel");
-
-            /*for (int i = 0; i < nodeList.getLength(); i++) {
-                ChannelActivity.CustomObject object = new ChannelActivity.CustomObject();
-
-                Node node = nodeList.item(i);
-                Element fstElmnt = (Element) node;
-                NodeList nameList = fstElmnt.getElementsByTagName("name");
-                Element nameElement = (Element) nameList.item(0);
-                nameList = nameElement.getChildNodes();
-                Log.d("Nodes","Name = " + ((Node) nameList.item(0)).getNodeValue());
-                object.setChannelName(((Node) nameList.item(0)).getNodeValue());
-
-                nameList = fstElmnt.getElementsByTagName("url");
-                nameElement = (Element) nameList.item(0);
-                nameList = nameElement.getChildNodes();
-                Log.d("Nodes","Url = " + ((Node) nameList.item(0)).getNodeValue());
-                object.setChannelUrl(((Node) nameList.item(0)).getNodeValue());
-
-                nameList = fstElmnt.getElementsByTagName("image");
-                nameElement = (Element) nameList.item(0);
-                nameList = nameElement.getChildNodes();
-                Log.d("Nodes","Image = " + ((Node) nameList.item(0)).getNodeValue());
-                object.setChannelImage(((Node) nameList.item(0)).getNodeValue());
-
-                dataSet2.add(object);
-            }
-
-            adapter = new CustomAdapter(dataSet2, context);*/
-
-        } catch (Exception e) {
-            System.out.println("XML Parsing Excpetion = " + e);
-        }
-
-
-    }
-
     private void stopPlayer(){
         simpleExoPlayer.stop();
-        //playerView.onPause();
-        //playerView.removeView(playerView);
+        playerView.onPause();
+        playerView.removeView(playerView);
         simpleExoPlayer.release();
         simpleExoPlayer.clearMediaItems();
 
@@ -213,10 +204,5 @@ public class PlayerActivity extends AppCompatActivity implements View.OnClickLis
         super.onDestroy();
         Log.v(TAG, "onDestroy()...");
         simpleExoPlayer.release();
-    }
-
-    @Override
-    public void onClick(View view) {
-    Toast.makeText(getApplicationContext(),"The OnClick works!!", Toast.LENGTH_LONG).show();
     }
 }

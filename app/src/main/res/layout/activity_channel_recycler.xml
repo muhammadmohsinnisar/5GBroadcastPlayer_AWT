@@ -31,8 +31,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription,MissingConstraints" />
 
-
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_savedvideo"
                 android:layout_width="25dp"
@@ -68,11 +66,9 @@
                 android:id="@+id/bt_view"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="@drawable/list"
                 android:layout_marginEnd="10dp"
-                android:shadowColor="@color/white"
+                android:background="@drawable/list"
                 android:outlineAmbientShadowColor="@color/white"
-                app:rippleColor="@color/white"
                 android:outlineSpotShadowColor="@color/white"
                 android:layout_gravity="end"
 
@@ -85,12 +81,10 @@
                 android:background="@drawable/loupe"
                 android:layout_marginEnd="10dp"
                 android:shadowColor="@color/white"
-                android:outlineAmbientShadowColor="@color/white"
-                app:rippleColor="@color/white"
-                android:outlineSpotShadowColor="@color/white"
-                android:layout_gravity="end"
 
-                />
+                app:rippleColor="@color/white"
+
+                tools:ignore="SpeakableTextPresentCheck" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -98,7 +92,6 @@
 
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -112,7 +105,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

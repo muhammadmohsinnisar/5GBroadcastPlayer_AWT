@@ -1,8 +1,6 @@
 package com.example.a5gbroadcastplayer_awt;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+
+import java.util.List;
 
 import Adapter.TestAdapter;
 
@@ -32,17 +32,10 @@ public class RecyclerTestActivity extends AppCompatActivity {
         s1 = getResources().getStringArray(R.array.place_holders);
         s2 = getResources().getStringArray(R.array.place_holders_length);
 
-        TestAdapter testAdapter = new TestAdapter(this, s1, s2);
+        List<String> contentUris=getIntent().getStringArrayListExtra("contentUris");
+        TestAdapter testAdapter = new TestAdapter(this, s1,s2,contentUris);
         recyclerView.setAdapter(testAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Search button", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }
