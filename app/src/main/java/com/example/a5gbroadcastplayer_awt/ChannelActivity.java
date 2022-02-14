@@ -149,8 +149,8 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
             @Override
             public void onItemClick(int position) {
                 CustomObject object = new CustomObject();
-                object.setChannelName(getChannelName(position));
-                object.setChannelUrl(getChannelUrl(position));
+                //object.setChannelName(getChannelName(position));
+                //object.setChannelUrl(getChannelUrl(position));
                 Intent in = new Intent(this, PlayerActivity.class);
                 String channelName = object.getChannelName();
                 String channelURL = object.getChannelUrl();
