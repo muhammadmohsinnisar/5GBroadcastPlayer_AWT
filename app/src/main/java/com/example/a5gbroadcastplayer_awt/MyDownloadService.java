@@ -149,8 +149,6 @@ public class MyDownloadService extends DownloadService {
                     e.printStackTrace();
                 }
 
-
-
             } else if (download.state == Download.STATE_FAILED) {
                 notification =
                         notificationHelper.buildDownloadFailedNotification(

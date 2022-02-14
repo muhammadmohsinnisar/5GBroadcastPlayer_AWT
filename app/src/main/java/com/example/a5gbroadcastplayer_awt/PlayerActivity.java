@@ -1,5 +1,6 @@
 package com.example.a5gbroadcastplayer_awt;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -30,7 +31,24 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.ui.StyledPlayerControlView;
 import com.google.android.exoplayer2.upstream.DefaultDataSource;
 
-public class PlayerActivity extends AppCompatActivity{
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.StringWriter;
+import java.net.URL;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+public class PlayerActivity extends AppCompatActivity {
 
     private static final String TAG = "PlayerActivity.java";
     //private static final String channelUrl = "http://ftp.itec.aau.at/datasets/DASHDataset2014/TearsOfSteel/2sec/TearsOfSteel_2s_onDemand_2014_05_09.mpd";
@@ -60,6 +78,7 @@ public class PlayerActivity extends AppCompatActivity{
         setContentView(R.layout.activity_frame_player);
         channelName = getIntent().getExtras().getString("name");
         channelUrl = getIntent().getExtras().getString("url");
+        playerView = new PlayerView(getApplicationContext());
 
         playerView =  new PlayerView(getApplicationContext());
         playerControlView = new PlayerControlView(getApplicationContext());
@@ -120,8 +139,9 @@ public class PlayerActivity extends AppCompatActivity{
         super.onBackPressed();
         Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
         stopPlayer();
-        PlayerActivity.this.finish();
-        startActivity(intent2);
+//        PlayerActivity.this.finish();
+//        startActivity(intent2);
+        this.finish();
     }
 
     private void initializePlayer(String url){
@@ -141,6 +161,7 @@ public class PlayerActivity extends AppCompatActivity{
         //playerControlView.findViewById(R.id.exo_player_control_view);
         playerView.setPlayer(simpleExoPlayer);
         MediaItem mediaItem = MediaItem.fromUri(url);
+
         simpleExoPlayer.addMediaItem(mediaItem);
         simpleExoPlayer.prepare();
         simpleExoPlayer.setPlayWhenReady(true);

@@ -5,6 +5,7 @@ import com.bumptech.glide.load.engine.Resource;
 public class CustomModel {
     private String channelName = null;
     private String channelUrl = null;
+    private String channelImage = null;
 
     public CustomModel(){
     }
@@ -28,5 +29,13 @@ public class CustomModel {
 
     public void setChannelUrl(String channelUrl){
         this.channelUrl = channelUrl;
+    }
+
+    public String getChannelImage() {
+        return channelImage;
+    }
+
+    public void setChannelImage(String channelImage) {
+        this.channelImage = channelImage;
     }
 }
