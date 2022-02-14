@@ -18,11 +18,18 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
-import org.json.JSONException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import Adapter.CustomAdapter;
 import Model.CustomModel;
@@ -37,6 +44,7 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
     RecyclerView recycler;
     private Context context;
     public List<CustomModel> dataSet;
+    CustomAdapter customAdapter;
     TextView channelText;
     TextView channelText2;
     ShapeableImageView box;
@@ -55,20 +63,23 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         //channelText2 = findViewById(R.id.testTextView);
         channelName = getResources().getStringArray(R.array.channel_name);
         channelURL = getResources().getStringArray(R.array.channel_URL);
+        dataSet = new ArrayList<>();
 
-        CustomModel customModel = new CustomModel();
-        List<CustomModel> dataSet = new ArrayList<>();
-        CustomAdapter customAdapter = new CustomAdapter(dataSet, context);
-        doInBackground(dataSet);
+        //CustomModel customModel = new CustomModel();
+        //List<CustomModel> dataSet = new ArrayList<>();
+        //customAdapter = new CustomAdapter(dataSet, context);
+        //doInBackground(dataSet);
+        customAdapter = loadChannelList();
+        customAdapter.setOnClick(this::onItemClick);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getApplicationContext(),2,RecyclerView.VERTICAL,false);
         recycler.setLayoutManager(gridLayoutManager);
         recycler.setAdapter(customAdapter);
-        customAdapter.setOnClick(this::onItemClick);
         casting = findViewById(R.id.bt_cast);
         search = findViewById(R.id.bt_search);
         viewLayout = findViewById(R.id.bt_view);
         savedVideo = findViewById(R.id.bt_savedvideo);
         createChannel = findViewById(R.id.bt_channeladd);
+
         savedVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,16 +127,65 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
 
     @Override
     public void onItemClick(int position) {
-        CustomObject object = new CustomObject();
-        object.setChannelName(getChannelName(position));
-        object.setChannelUrl(getChannelUrl(position));
+        Toast.makeText(context,"Click",Toast.LENGTH_SHORT).show();
         Intent in = new Intent(this, PlayerActivity.class);
-        String channelName = object.getChannelName();
-        String channelURL = object.getChannelUrl();
-        in.putExtra("name", channelName);
-        in.putExtra("url", channelURL);
+        in.putExtra("name", customAdapter.getLocalDataSet().get(position).getChannelName());
+        in.putExtra("url", customAdapter.getLocalDataSet().get(position).getChannelUrl());
         startActivity(in);
-        Toast.makeText(this,"This click works!!!onItemClick!!",Toast.LENGTH_LONG).show();
+    }
+
+    public CustomAdapter loadChannelList() {
+
+        CustomAdapter adapter = new CustomAdapter(dataSet, context);;
+
+        try {
+            //Toast.makeText(context,"load channels",Toast.LENGTH_SHORT).show();
+            URL url = new URL("http://ffmpeg.hilbig17.de/channellist.xml");
+            Log.d("Nodes","Loading channels from url: " + url.toString());
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(new InputSource(url.openStream()));
+            doc.getDocumentElement().normalize();
+
+            NodeList nodeList = doc.getElementsByTagName("channel");
+
+            List<CustomModel> dataSet2 = new ArrayList<>();
+            Log.d("Nodes","Laenge: " + nodeList.getLength());
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                CustomObject object = new CustomObject();
+
+                Node node = nodeList.item(i);
+                Element fstElmnt = (Element) node;
+                NodeList nameList = fstElmnt.getElementsByTagName("name");
+                Element nameElement = (Element) nameList.item(0);
+                nameList = nameElement.getChildNodes();
+                Log.d("Nodes","Name = " + ((Node) nameList.item(0)).getNodeValue());
+                object.setChannelName(((Node) nameList.item(0)).getNodeValue());
+
+                nameList = fstElmnt.getElementsByTagName("url");
+                nameElement = (Element) nameList.item(0);
+                nameList = nameElement.getChildNodes();
+                Log.d("Nodes","Url = " + ((Node) nameList.item(0)).getNodeValue());
+                object.setChannelUrl(((Node) nameList.item(0)).getNodeValue());
+
+                nameList = fstElmnt.getElementsByTagName("image");
+                nameElement = (Element) nameList.item(0);
+                nameList = nameElement.getChildNodes();
+                Log.d("Nodes","Image = " + ((Node) nameList.item(0)).getNodeValue());
+                object.setChannelImage(((Node) nameList.item(0)).getNodeValue());
+
+                dataSet2.add(object);
+            }
+
+            adapter = new CustomAdapter(dataSet2, context);
+
+        } catch (Exception e) {
+            System.out.println("XML Parsing Excpetion = " + e);
+        }
+
+        return adapter;
+
     }
 
     public void doInBackground(List<CustomModel> list){

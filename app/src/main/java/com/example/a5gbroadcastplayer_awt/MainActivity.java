@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SPLASH_SCREEN = 5000;
+    private static final int SPLASH_SCREEN = 500;
     Animation topAnim,bottomAnim;
     ImageView logo;
     TextView nameApp, starter;
@@ -30,9 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
 
         //animations
         topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
@@ -46,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         logo.startAnimation(topAnim);
         nameApp.startAnimation(topAnim);
         starter.startAnimation(bottomAnim);
+
+        StrictMode.ThreadPolicy gfgPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(gfgPolicy);
 
         new Handler().postDelayed(new Runnable() {
             @Override
