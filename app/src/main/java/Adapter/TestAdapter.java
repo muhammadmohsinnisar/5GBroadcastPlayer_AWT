@@ -1,6 +1,8 @@
 package Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +11,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.a5gbroadcastplayer_awt.ChannelActivity;
+import com.example.a5gbroadcastplayer_awt.PlayerActivity;
 import com.example.a5gbroadcastplayer_awt.R;
+import com.example.a5gbroadcastplayer_awt.RecyclerTestActivity;
+
+import java.util.List;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
 
-    String[] data1, data2;
+    String data1[], data2[];
 
     Context context;
+    List<String> contentUris;
 
-    public TestAdapter(Context ct, String s1[], String s2[]){
+    public TestAdapter(Context ct, String[] s1, String[] s2, List<String> contentUris){
         context = ct;
         data1 = s1;
         data2 = s2;
+        this.contentUris=contentUris;
+    }
+
+    public TestAdapter(RecyclerTestActivity ct, List<String> contentUris) {
+        this.context=ct;
+        this.contentUris=contentUris;
+
     }
 
     @NonNull
@@ -32,15 +47,37 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TestViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TestViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.myText1.setText(data1[position]);
         holder.myText2.setText(data2[position]);
+        for (String contentUri : contentUris){
+            holder.myText1.setText(data1[position]);
+            //holder.myText1.setText();
+        }
+        holder.myText1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChannelActivity.CustomObject object = new ChannelActivity.CustomObject();
+               // object.setChannelName(getChannelName(position));
+                object.setChannelUrl(contentUris.get(position));
+                Intent in = new Intent(context, PlayerActivity.class);
+               // String channelName = object.getChannelName();
+                String channelURL = object.getChannelUrl();
+             //   in.putExtra("name", channelName);
+                in.putExtra("url", channelURL);
+                context.startActivity(in);
+            }
+        });
     }
+
+
 
     @Override
     public int getItemCount() {
-        return data1.length;
+        return contentUris.size();
     }
+
+
 
     public class TestViewHolder extends RecyclerView.ViewHolder{
 
@@ -55,4 +92,6 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
 
         }
     }
+
+
 }
