@@ -18,6 +18,8 @@ import com.example.a5gbroadcastplayer_awt.RecyclerTestActivity;
 
 import java.util.List;
 
+import Model.CustomModel;
+
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
 
     String data1[], data2[];
@@ -57,7 +59,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
         holder.myText1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ChannelActivity.CustomObject object = new ChannelActivity.CustomObject();
+                CustomModel object = new CustomModel();
                // object.setChannelName(getChannelName(position));
                 object.setChannelUrl(contentUris.get(position));
                 Intent in = new Intent(context, PlayerActivity.class);

@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -137,8 +139,9 @@ public class PlayerActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent2 = new Intent(getApplicationContext(),ChannelActivity.class);
         stopPlayer();
-        PlayerActivity.this.finish();
-        startActivity(intent2);
+//        PlayerActivity.this.finish();
+//        startActivity(intent2);
+        this.finish();
     }
 
     private void initializePlayer(String url){

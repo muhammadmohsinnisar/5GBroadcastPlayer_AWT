@@ -36,6 +36,7 @@ import org.xml.sax.InputSource;
 
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -81,15 +82,14 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         context = this;
         box = findViewById(R.id.image_logo);
         channelText = findViewById(R.id.channel_name);
-        //channelText2 = findViewById(R.id.testTextView);
         channelName = getResources().getStringArray(R.array.channel_name);
         channelURL = getResources().getStringArray(R.array.channel_URL);
         dataSet = new ArrayList<>();
 
 //        CustomModel customModel = new CustomModel();
 //        List<CustomModel> dataSet = new ArrayList<>();
-        //customAdapter = new CustomAdapter(dataSet, context);
-        //doInBackground(dataSet);
+//        customAdapter = new CustomAdapter(dataSet, context);
+//        doInBackground(dataSet);
         customAdapter = loadChannelList();
         customAdapter.setOnClick(this::onItemClick);
 
@@ -117,42 +117,43 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
                 } else {
                     Toast.makeText(getApplicationContext(), "empty library", Toast.LENGTH_LONG).show();
                 }
-            }});
+            }
+        });
+
         viewLayout.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(), "View change button", Toast.LENGTH_LONG).show();
-                        }
-                    });
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "View change button", Toast.LENGTH_LONG).show();
+            }
+        });
+
         search.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(), "Search button", Toast.LENGTH_LONG).show();
-                        }
-                    });
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Search button", Toast.LENGTH_LONG).show();
+            }
+        });
 
         casting.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(), "Casting button", Toast.LENGTH_LONG).show();
-                        }
-                    });
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Casting button", Toast.LENGTH_LONG).show();
+            }
+        });
 
         createChannel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getApplicationContext(), "create channel button", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    //TODO replace ImageView with View and check with the link
-
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "create channel button", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
-            @Override
-            public void onBackPressed() {
-                super.onBackPressed();
-                ChannelActivity.this.finish();
-            }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ChannelActivity.this.finish();
+    }
 
     @Override
     public void onItemClick(int position) {
@@ -182,7 +183,7 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
             Log.d("Nodes","Laenge: " + nodeList.getLength());
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                CustomObject object = new CustomObject();
+                CustomModel object = new CustomModel();
 
                 Node node = nodeList.item(i);
                 Element fstElmnt = (Element) node;
@@ -217,62 +218,51 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
 
     }
 
-            @Override
-            public void onDownloadClick(int pos) {
+    @Override
+    public void onDownloadClick(int pos) {
 
-                CustomObject object = new CustomObject();
-                object.setChannelUrl(getChannelUrl(pos));
-                String channelURL = object.getChannelUrl();
-                String URL = channelURL.toString();
-                Uri contentUri = Uri.parse(URL);
-                Log.d("uri", "downloadVideo: " + contentUri);
+        Uri contentUri = Uri.parse(customAdapter.getLocalDataSet().get(pos).getChannelUrl());
+        Log.d("uri", "downloadVideo: " + contentUri);
 
-                contentUris.add(contentUri.toString());
+        contentUris.add(contentUri.toString());
 
-                downloadVideo(contentUri);
-            }
+        downloadVideo(contentUri);
+    }
 
+    private void downloadVideo(Uri contentUri) {
+        databaseProvider = new StandaloneDatabaseProvider(context);
+        downloadDirectory = new File(context.getExternalFilesDir(null), "my app");
 
-            private void downloadVideo(Uri contentUri) {
+        // Create a factory for reading the data from the network.
+        dataSourceFactory = new DefaultHttpDataSource.Factory();
 
+        // Choose an executor for downloading data. Using Runnable::run will cause each download task to
+        // download data on its own thread. Passing an executor that uses multiple threads will speed up
+        // download tasks that can be split into smaller parts for parallel execution. Applications that
+        // already have an executor for background downloads may wish to reuse their existing executor.
+        Executor downloadExecutor = Runnable::run;
 
-                databaseProvider = new StandaloneDatabaseProvider(context);
+        // Create the download manager.
+        downloadManager = new DownloadManager(
+                context,
+                databaseProvider,
+                downloadCache,
+                dataSourceFactory,
+                downloadExecutor);
 
-                downloadDirectory = new File(context.getExternalFilesDir(null), "my app");
+        // Optionally, setters can be called to configure the download manager.
+        //downloadManager.setRequirements(requirements);
+        downloadManager.setMaxParallelDownloads(3);
 
+        DownloadRequest downloadRequest =
+                new DownloadRequest.Builder(contentUri.getPath(), contentUri).build();
 
-// Create a factory for reading the data from the network.
-                dataSourceFactory = new DefaultHttpDataSource.Factory();
-
-// Choose an executor for downloading data. Using Runnable::run will cause each download task to
-// download data on its own thread. Passing an executor that uses multiple threads will speed up
-// download tasks that can be split into smaller parts for parallel execution. Applications that
-// already have an executor for background downloads may wish to reuse their existing executor.
-                Executor downloadExecutor = Runnable::run;
-
-// Create the download manager.
-                downloadManager = new DownloadManager(
-                        context,
-                        databaseProvider,
-                        downloadCache,
-                        dataSourceFactory,
-                        downloadExecutor);
-
-// Optionally, setters can be called to configure the download manager.
-                //downloadManager.setRequirements(requirements);
-                downloadManager.setMaxParallelDownloads(3);
-
-                DownloadRequest downloadRequest =
-                        new DownloadRequest.Builder(contentUri.getPath(), contentUri).build();
-
-                DownloadService.sendAddDownload(
-                        context,
-                        MyDownloadService.class,
-                        downloadRequest,
-                        /* foreground= */ false);
-
-
-/*
+        DownloadService.sendAddDownload(
+                context,
+                MyDownloadService.class,
+                downloadRequest,
+                /* foreground= */ false);
+        /*
 
         DataSource.Factory cacheDataSourceFactory =
                 new CacheDataSource.Factory()
@@ -292,164 +282,161 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         player.prepare();
 
 
- */
+        */
 
+    }
 
+    // ********************************************************************************************
+    // Todo Comment by Julian: You can remove this since channel list is now loaded from remote resource
+
+    /*public void doInBackground(List<CustomModel> list) {
+        String[] channelName = getResources().getStringArray(R.array.channel_name);
+        String[] channelURL = getResources().getStringArray(R.array.channel_URL);
+        int j = channelURL.length;
+
+        //CustomObject object = new CustomObject();
+        if (channelName != null) {
+            for (int i = 0; i < j; i++) {
+                String name = getChannelName(i);
+                String url = getChannelUrl(i);
+                CustomObject object = new CustomObject(name, url);
+                object.setChannelName(name);
+                object.setChannelUrl(url);
+                list.add(object);
             }
 
+            // Log.d("List generated",""+dataSet.size());
 
-            public void doInBackground(List<CustomModel> list) {
-                String[] channelName = getResources().getStringArray(R.array.channel_name);
-                String[] channelURL = getResources().getStringArray(R.array.channel_URL);
-                int j = channelURL.length;
-
-                //CustomObject object = new CustomObject();
-                if (channelName != null) {
-                    for (int i = 0; i < j; i++) {
-                        String name = getChannelName(i);
-                        String url = getChannelUrl(i);
-                        CustomObject object = new CustomObject(name, url);
-                        object.setChannelName(name);
-                        object.setChannelUrl(url);
-                        list.add(object);
-                    }
-
-                    // Log.d("List generated",""+dataSet.size());
-
-                } else {
-                    Log.d("List not generated", "" + dataSet.size());
-                    Toast.makeText(context, "doInbackgroud failed!!!", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            public void openActivity2(int i) {
-                //channelURL = getResources().getStringArray(R.array.channel_URL);
-                String cU = channelURL[i];
-                Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-                intent.putExtra("url", cU);
-                startActivity(intent);
-                finish();
-            }
-
-            /*@Override
-            public void onClick(View view) {
-                int itemPosition = recycler.getChildLayoutPosition(view);
-                String name = channelName[itemPosition];
-                String url = channelURL[itemPosition];
-                openActivity2();
-
-            }*/
-            public String getName(String[] channelName) {
-                String name = null;
-                for (int i = 0; i < size(); i++) {
-                    name = channelName[i];
-                }
-                return name;
-            }
-
-            public String getUrl(String[] channelURL) {
-                String url = null;
-                for (int i = 0; i < size(); i++) {
-                    url = channelURL[i];
-                }
-                return url;
-            }
-
-            public void onClick(View view) {
-                int itemPosition = recycler.getChildLayoutPosition(view);
-                Intent intent = new Intent();
-                intent.putExtra("name", getChannelName(itemPosition));
-                intent.putExtra("url", getChannelUrl(itemPosition));
-                startActivity(intent);
-            }
-
-
-            public static class CustomObject extends CustomModel {
-                String channelName;
-                String channelUrl;
-                int itemPos;
-
-                CustomObject(String[] chN, String[] chU, int item) {
-                    itemPos = item;
-                    channelName = chN[itemPos];
-                    channelUrl = chU[itemPos];
-                }
-
-                public CustomObject(String cN, String cU) {
-                    channelName = cN;
-                    channelUrl = cU;
-                }
-
-                public CustomObject() {
-                }
-            }
-
-            public int getPosition(RecyclerView recyclerView, View view) {
-                int pos = recyclerView.getLayoutManager().getPosition(view);
-                return pos;
-            }
-
-            public String getChannelName(int itemPosition) {
-                channelName = getResources().getStringArray(R.array.channel_name);
-                String cN = channelName[itemPosition];
-                return cN;
-            }
-
-            public String getChannelUrl(int itemPosition) {
-                channelURL = getResources().getStringArray(R.array.channel_URL);
-                String cU = channelURL[itemPosition];
-                return cU;
-            }
-
-            public int size() {
-                int length = getResources().getStringArray(R.array.channel_URL).length;
-                for (int i = 0; i <= length; i++) {
-                    length = i;
-                }
-                return length;
-            }
-
-
-            //TODO This function will take the number of items in resource and create objects accordingly.
-            public void objectCreator() {
-                for (int i = 0; i < size(); i++) {
-                    List<CustomModel> dataSet = new ArrayList<>();
-                    CustomModel object = new CustomModel(channelName[i], channelURL[i]);
-                    dataSet.add(object);
-
-                }
-            }
-            //-------------------------------------------------------ANDROID LIFECYCLE---------------------------------------------------------------------------------------------
-
-            @Override
-            protected void onStop() {
-                super.onStop();
-                Log.v(TAG, "onStop()...");
-            }
-
-            @Override
-            protected void onStart() {
-                super.onStart();
-                Log.v(TAG, "onStart()...");
-            }
-
-            @Override
-            protected void onResume() {
-                super.onResume();
-                Log.v(TAG, "onResume()...");
-            }
-
-            @Override
-            protected void onPause() {
-                super.onPause();
-                Log.v(TAG, "onPause()...");
-            }
-
-            @Override
-            protected void onDestroy() {
-                super.onDestroy();
-                Log.v(TAG, "onDestroy()...");
-
-
-            }
+        } else {
+            Log.d("List not generated", "" + dataSet.size());
+            Toast.makeText(context, "doInbackgroud failed!!!", Toast.LENGTH_LONG).show();
         }
+    }*/
+    // ********************************************************************************************
+
+
+    // Todo Comment by Julian: Is this needed? It was used in onBackPressed but why?
+    /*public void openActivity2(int i) {
+        //channelURL = getResources().getStringArray(R.array.channel_URL);
+        String cU = channelURL[i];
+        Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
+        intent.putExtra("url", cU);
+        startActivity(intent);
+        finish();
+    }*/
+
+    // todo comment by Julian: not needed right?
+    /*
+    public String getName(String[] channelName) {
+        String name = null;
+        for (int i = 0; i < size(); i++) {
+            name = channelName[i];
+        }
+        return name;
+    }
+
+    public String getUrl(String[] channelURL) {
+        String url = null;
+        for (int i = 0; i < size(); i++) {
+            url = channelURL[i];
+        }
+        return url;
+    }
+
+    public void onClick(View view) {
+        int itemPosition = recycler.getChildLayoutPosition(view);
+        Intent intent = new Intent();
+        intent.putExtra("name", getChannelName(itemPosition));
+        intent.putExtra("url", getChannelUrl(itemPosition));
+        startActivity(intent);
+    }*/
+
+    // todo comment by Julian: not needed right?
+    /*
+    public static class CustomObject extends CustomModel {
+        String channelName;
+        String channelUrl;
+        int itemPos;
+
+        CustomObject(String[] chN, String[] chU, int item) {
+            itemPos = item;
+            channelName = chN[itemPos];
+            channelUrl = chU[itemPos];
+        }
+
+        public CustomObject(String cN, String cU) {
+            channelName = cN;
+            channelUrl = cU;
+        }
+
+        public CustomObject() {
+        }
+    }
+
+    public int getPosition(RecyclerView recyclerView, View view) {
+        int pos = recyclerView.getLayoutManager().getPosition(view);
+        return pos;
+    }
+
+    public String getChannelName(int itemPosition) {
+        channelName = getResources().getStringArray(R.array.channel_name);
+        String cN = channelName[itemPosition];
+        return cN;
+    }
+
+    public String getChannelUrl(int itemPosition) {
+        channelURL = getResources().getStringArray(R.array.channel_URL);
+        String cU = channelURL[itemPosition];
+        return cU;
+    }
+
+    public int size() {
+        int length = getResources().getStringArray(R.array.channel_URL).length;
+        for (int i = 0; i <= length; i++) {
+            length = i;
+        }
+        return length;
+    }
+
+    //TODO This function will take the number of items in resource and create objects accordingly.
+    public void objectCreator() {
+        for (int i = 0; i < size(); i++) {
+            List<CustomModel> dataSet = new ArrayList<>();
+            CustomModel object = new CustomModel(channelName[i], channelURL[i]);
+            dataSet.add(object);
+
+        }
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.v(TAG, "onStop()...");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.v(TAG, "onStart()...");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.v(TAG, "onResume()...");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.v(TAG, "onPause()...");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.v(TAG, "onDestroy()...");
+
+
+    }
+}
