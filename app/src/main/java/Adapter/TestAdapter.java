@@ -22,7 +22,7 @@ import Model.CustomModel;
 
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder> {
 
-    String data1[], data2[];
+    String data1[], data2[]; //The adapter for ChannelList.
 
     Context context;
     List<String> contentUris;
@@ -60,38 +60,27 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.TestViewHolder
             @Override
             public void onClick(View view) {
                 CustomModel object = new CustomModel();
-               // object.setChannelName(getChannelName(position));
                 object.setChannelUrl(contentUris.get(position));
                 Intent in = new Intent(context, PlayerActivity.class);
-               // String channelName = object.getChannelName();
                 String channelURL = object.getChannelUrl();
-             //   in.putExtra("name", channelName);
                 in.putExtra("url", channelURL);
                 context.startActivity(in);
             }
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return contentUris.size();
     }
 
-
-
     public class TestViewHolder extends RecyclerView.ViewHolder{
-
         TextView myText1, myText2;
 
         public TestViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.txtName);
             myText2 = itemView.findViewById(R.id.txtlength);
-
-
-
         }
     }
 
