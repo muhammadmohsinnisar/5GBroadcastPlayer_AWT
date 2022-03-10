@@ -23,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     TextView nameApp, starter;
 
 
-
+    /**
+     * The splash screen for the application, used to add an aesthetic touch
+     * to the application
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
