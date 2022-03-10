@@ -60,7 +60,6 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
     public List<CustomModel> dataSet;
     CustomAdapter customAdapter;
     TextView channelText;
-    TextView channelText2;
     ShapeableImageView box;
     String[] channelName, channelURL;
 
@@ -86,10 +85,6 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         channelURL = getResources().getStringArray(R.array.channel_URL);
         dataSet = new ArrayList<>();
 
-//        CustomModel customModel = new CustomModel();
-//        List<CustomModel> dataSet = new ArrayList<>();
-//        customAdapter = new CustomAdapter(dataSet, context);
-//        doInBackground(dataSet);
         customAdapter = loadChannelList();
         customAdapter.setOnClick(this::onItemClick);
 
@@ -164,12 +159,19 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
         startActivity(in);
     }
 
+    /**
+     * LoadChannelList is loading our channels available on the URL
+     * Generates a nodelist with elements channels. Every element
+     * has a name, url and an image
+     * The nodelist is attached to an Object which is passed to the adapter
+     *
+     * @return CustomAdapter
+     */
     public CustomAdapter loadChannelList() {
 
         CustomAdapter adapter = new CustomAdapter(dataSet, context);;
 
         try {
-            //Toast.makeText(context,"load channels",Toast.LENGTH_SHORT).show();
             URL url = new URL("http://ffmpeg.hilbig17.de/channellist.xml");
             Log.d("Nodes","Loading channels from url: " + url.toString());
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -218,6 +220,13 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
 
     }
 
+    /**
+     * the onDownlaodClick function is used for the clickButton for every channel
+     * The onDownloadClick is attached to every channel and the URI is parsed to
+     * downloadVideo function here
+     *
+     * @param pos
+     */
     @Override
     public void onDownloadClick(int pos) {
 
@@ -228,6 +237,13 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
 
         downloadVideo(contentUri);
     }
+
+    /**
+     * The downloadVideo is used for initialising the download manager
+     * The download manager is used for caching of the Stream
+     *
+     * @param contentUri
+     */
 
     private void downloadVideo(Uri contentUri) {
         databaseProvider = new StandaloneDatabaseProvider(context);
@@ -262,151 +278,7 @@ public class ChannelActivity extends AppCompatActivity implements CustomAdapter.
                 MyDownloadService.class,
                 downloadRequest,
                 /* foreground= */ false);
-        /*
-
-        DataSource.Factory cacheDataSourceFactory =
-                new CacheDataSource.Factory()
-                        .setCache(downloadCache)
-                        .setUpstreamDataSourceFactory(httpDataSourceFactory)
-                        .setCacheWriteDataSinkFactory(null); // Disable writing.
-
-        ExoPlayer player = new ExoPlayer.Builder(context)
-                .setMediaSourceFactory(
-                        new DefaultMediaSourceFactory(cacheDataSourceFactory))
-                .build();
-
-        ProgressiveMediaSource mediaSource =
-                new ProgressiveMediaSource.Factory(cacheDataSourceFactory)
-                        .createMediaSource(MediaItem.fromUri(contentUri));
-        player.setMediaSource(mediaSource);
-        player.prepare();
-
-
-        */
-
     }
-
-    // ********************************************************************************************
-    // Todo Comment by Julian: You can remove this since channel list is now loaded from remote resource
-
-    /*public void doInBackground(List<CustomModel> list) {
-        String[] channelName = getResources().getStringArray(R.array.channel_name);
-        String[] channelURL = getResources().getStringArray(R.array.channel_URL);
-        int j = channelURL.length;
-
-        //CustomObject object = new CustomObject();
-        if (channelName != null) {
-            for (int i = 0; i < j; i++) {
-                String name = getChannelName(i);
-                String url = getChannelUrl(i);
-                CustomObject object = new CustomObject(name, url);
-                object.setChannelName(name);
-                object.setChannelUrl(url);
-                list.add(object);
-            }
-
-            // Log.d("List generated",""+dataSet.size());
-
-        } else {
-            Log.d("List not generated", "" + dataSet.size());
-            Toast.makeText(context, "doInbackgroud failed!!!", Toast.LENGTH_LONG).show();
-        }
-    }*/
-    // ********************************************************************************************
-
-
-    // Todo Comment by Julian: Is this needed? It was used in onBackPressed but why?
-    /*public void openActivity2(int i) {
-        //channelURL = getResources().getStringArray(R.array.channel_URL);
-        String cU = channelURL[i];
-        Intent intent = new Intent(getApplicationContext(), PlayerActivity.class);
-        intent.putExtra("url", cU);
-        startActivity(intent);
-        finish();
-    }*/
-
-    // todo comment by Julian: not needed right?
-    /*
-    public String getName(String[] channelName) {
-        String name = null;
-        for (int i = 0; i < size(); i++) {
-            name = channelName[i];
-        }
-        return name;
-    }
-
-    public String getUrl(String[] channelURL) {
-        String url = null;
-        for (int i = 0; i < size(); i++) {
-            url = channelURL[i];
-        }
-        return url;
-    }
-
-    public void onClick(View view) {
-        int itemPosition = recycler.getChildLayoutPosition(view);
-        Intent intent = new Intent();
-        intent.putExtra("name", getChannelName(itemPosition));
-        intent.putExtra("url", getChannelUrl(itemPosition));
-        startActivity(intent);
-    }*/
-
-    // todo comment by Julian: not needed right?
-    /*
-    public static class CustomObject extends CustomModel {
-        String channelName;
-        String channelUrl;
-        int itemPos;
-
-        CustomObject(String[] chN, String[] chU, int item) {
-            itemPos = item;
-            channelName = chN[itemPos];
-            channelUrl = chU[itemPos];
-        }
-
-        public CustomObject(String cN, String cU) {
-            channelName = cN;
-            channelUrl = cU;
-        }
-
-        public CustomObject() {
-        }
-    }
-
-    public int getPosition(RecyclerView recyclerView, View view) {
-        int pos = recyclerView.getLayoutManager().getPosition(view);
-        return pos;
-    }
-
-    public String getChannelName(int itemPosition) {
-        channelName = getResources().getStringArray(R.array.channel_name);
-        String cN = channelName[itemPosition];
-        return cN;
-    }
-
-    public String getChannelUrl(int itemPosition) {
-        channelURL = getResources().getStringArray(R.array.channel_URL);
-        String cU = channelURL[itemPosition];
-        return cU;
-    }
-
-    public int size() {
-        int length = getResources().getStringArray(R.array.channel_URL).length;
-        for (int i = 0; i <= length; i++) {
-            length = i;
-        }
-        return length;
-    }
-
-    //TODO This function will take the number of items in resource and create objects accordingly.
-    public void objectCreator() {
-        for (int i = 0; i < size(); i++) {
-            List<CustomModel> dataSet = new ArrayList<>();
-            CustomModel object = new CustomModel(channelName[i], channelURL[i]);
-            dataSet.add(object);
-
-        }
-    }*/
 
     @Override
     protected void onStop() {
