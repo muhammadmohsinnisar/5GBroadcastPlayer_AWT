@@ -136,7 +136,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.channelNameView.setText(customModel.getChannelName());
-        //viewHolder.testTextView.setText(customModel.getChannelUrl());
         viewHolder.imageView.setBackground(context.getDrawable(R.drawable.ic_launcher_background2));
         Glide.with(context).
                load(customModel.getChannelImage()).into(viewHolder.getImageView());
@@ -165,9 +164,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     }
 
-
-
-
     public void setOnClick(onItemClicked onClick){
         this.onClick = onClick;
     }
@@ -175,8 +171,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     public void setOnDownload(onDownloadClick onDownload){
         this.onDownload=onDownload;
     }
-
-
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
