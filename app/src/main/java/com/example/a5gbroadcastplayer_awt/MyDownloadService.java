@@ -123,26 +123,7 @@ public class MyDownloadService extends DownloadService {
                             Uri uri = downloadCursor.getDownload().request.uri;
 
                             Log.d("url", "onDownloadChanged: "+uri);
-                            /*
-                            //downloadedTracks.add(new MediaStore.Video.Media());
-                            DataSource.Factory cacheDataSourceFactory =
-                                    new CacheDataSource.Factory()
-                                            .setCache(VideoCache.getInstance(context))
-                                            .setUpstreamDataSourceFactory(httpDataSourceFactory)
-                                            .setCacheWriteDataSinkFactory(null); // Disable writing.
 
-                            ExoPlayer player = new ExoPlayer.Builder(context)
-                                    .setMediaSourceFactory(
-                                            new DefaultMediaSourceFactory(cacheDataSourceFactory))
-                                    .build();
-
-                            ProgressiveMediaSource mediaSource =
-                                    new ProgressiveMediaSource.Factory(cacheDataSourceFactory)
-                                            .createMediaSource(MediaItem.fromUri(uri));
-                            player.setMediaSource(mediaSource);
-                            player.prepare();
-
-                             */
                         }while (downloadCursor.moveToNext());
                     }
                 } catch (IOException e) {
