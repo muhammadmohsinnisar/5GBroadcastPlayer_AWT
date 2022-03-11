@@ -29,8 +29,11 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSource;
 import com.google.android.exoplayer2.util.NotificationUtil;
 import com.google.android.exoplayer2.util.Util;
 
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.json.JSONStringer;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,7 @@ public class MyDownloadService extends DownloadService {
 
     private static final int JOB_ID = 1;
     private static final int FOREGROUND_NOTIFICATION_ID = 1;
-    private static HttpDataSource.Factory httpDataSourceFactory;
+    private static HttpDataSource.@MonotonicNonNull Factory httpDataSourceFactory;
 
     public MyDownloadService() {
         super(
@@ -91,6 +94,7 @@ public class MyDownloadService extends DownloadService {
 
         private final Context context;
         private final DownloadNotificationHelper notificationHelper;
+        private List<MediaItem> mediaItems= new ArrayList<>();
 
         private int nextNotificationId;
 
@@ -112,6 +116,17 @@ public class MyDownloadService extends DownloadService {
                                 R.drawable.ic_download_done,
                                 /* contentIntent= */ null,
                                 Util.fromUtf8Bytes(download.request.data));
+                FileOutputStream out = null;
+                try {
+                    out = new FileOutputStream(download.request.toMediaItem().mediaId);
+                    out.write(download.request.data);
+                    out.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Toast.makeText(context, "Download Completed", Toast.LENGTH_SHORT).show();
 
                 ArrayList<MediaStore.Video.Media> downloadedTracks = new ArrayList<MediaStore.Video.Media>();
@@ -119,16 +134,46 @@ public class MyDownloadService extends DownloadService {
                     DownloadCursor downloadCursor = downloadManager.getDownloadIndex().getDownloads();
                     if (downloadCursor.moveToFirst()) {
                         do {
-                            String jsonString =Util.fromUtf8Bytes(downloadCursor.getDownload().request.data);
-                            Uri uri = downloadCursor.getDownload().request.uri;
 
-                            Log.d("url", "onDownloadChanged: "+uri);
 
+                            MediaItem mediaItem=download.request.toMediaItem();
+
+
+                            mediaItems.add(mediaItem);
+                            Log.d("url", "onDownloadChanged: "+download.request.data.toString());
+                            /*
+                            DefaultDataSourceFactory dataSourceFactory=new DefaultDataSourceFactory(context, Util.getUserAgent(context,context.getString(R.string.app_name)));
+
+                            //downloadedTracks.add(new MediaStore.Video.Media());
+                            DataSource.Factory cacheDataSourceFactory =
+                                    new CacheDataSource.Factory()
+                                            .setCache(VideoCache.getInstance(context))
+                                            .setUpstreamDataSourceFactory(dataSourceFactory)
+                                            .setCacheWriteDataSinkFactory(null); // Disable writing.
+
+                            ExoPlayer player = new ExoPlayer.Builder(context)
+                                    .setMediaSourceFactory(
+                                            new DefaultMediaSourceFactory(cacheDataSourceFactory))
+                                    .build();
+
+                            ProgressiveMediaSource mediaSource =
+                                    new ProgressiveMediaSource.Factory(cacheDataSourceFactory)
+                                            .createMediaSource(mediaItem);
+                            player.setMediaSource(mediaSource);
+                            player.prepare();
+                            Log.d("mediaitem", "onDownloadChanged: "+mediaItem.toString());
+
+
+
+                             */
                         }while (downloadCursor.moveToNext());
+                        CacheMedia.getInstance().setMediaItems(mediaItems);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+
 
             } else if (download.state == Download.STATE_FAILED) {
                 notification =
